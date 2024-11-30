@@ -6,32 +6,161 @@
     <title>LocaMage - Advanced Image Geolocation</title>
     <meta name="description" content="Revolutionary image geolocation using AI and satellite imagery">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        lightblue: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .glass {
-            background: rgba(15, 23, 42, 0.25);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(30, 58, 138, 0.18);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .glass-dark {
-            background: rgba(15, 23, 42, 0.85);
+
+        .glass {
+            background: rgba(15, 23, 42, 0.15);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(30, 58, 138, 0.18);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(30, 58, 138, 0.25);
+        }
+        
+        /* Light mode styles */
+        :root[data-theme="light"] {
+            --bg-gradient-from: #f0f9ff;
+            --bg-gradient-via: #bae6fd;
+            --bg-gradient-to: #e0f2fe;
+            --text-color: #0f172a;
+            --overlay-bg: rgba(241, 245, 249, 0.7);
+            --preview-bg: rgba(241, 245, 249, 0.9);
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+        }
+        
+        :root[data-theme="light"] .glass {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(191, 219, 254, 0.5);
+        }
+        
+        :root[data-theme="light"] .glass-dark {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(191, 219, 254, 0.5);
+        }
+
+        /* Updated dark mode styles */
+        :root[data-theme="dark"] {
+            --bg-gradient-from: #0f172a;
+            --bg-gradient-via: #172554;
+            --bg-gradient-to: #0f172a;
+            --text-color: #ffffff;
+            --overlay-bg: rgba(15, 23, 42, 0.7);
+            --preview-bg: rgba(30, 41, 59, 0.9);
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --card-bg: rgba(30, 41, 59, 0.95);
+            --card-border: rgba(59, 130, 246, 0.2);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        :root[data-theme="dark"] .glass {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--card-shadow);
+        }
+
+        :root[data-theme="dark"] .glass:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .animate-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .hover-lift {
+            transition: transform 0.2s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
         }
     </style>
+    <script>
+        // Theme handling
+        function initTheme() {
+            const theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        }
+
+        function toggleTheme() {
+            const root = document.documentElement;
+            const currentTheme = root.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
 </head>
-<body class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white">
+<body class="text-[var(--text-color)] bg-gradient-to-br transition-all duration-300" style="background-image: linear-gradient(to bottom right, var(--bg-gradient-from), var(--bg-gradient-via), var(--bg-gradient-to))">
     <nav class="fixed w-full z-50">
         <div class="glass-dark shadow-lg">
             <div class="container mx-auto px-4 py-2">
                 <div class="flex items-center justify-between">
-                    <a class="text-2xl font-bold" href="#">LocaMage</a>
-                    <div class="hidden md:flex space-x-8">
-                        <a href="#solution" class="hover:text-blue-300 transition">Solution</a>
-                        <a href="#features" class="hover:text-blue-300 transition">Features</a>
-                        <a href="#contact" class="hover:text-blue-300 transition">Contact</a>
+                    <a class="text-xl md:text-2xl font-bold" href="#">LocaMage</a>
+                    <div class="flex items-center space-x-4">
+                        <div class="hidden md:flex space-x-8">
+                            <a href="#solution" class="hover:text-blue-300 transition">Solution</a>
+                            <a href="#features" class="hover:text-blue-300 transition">Features</a>
+                            <a href="#contact" class="hover:text-blue-300 transition">Contact</a>
+                        </div>
+                        <button class="md:hidden text-2xl" onclick="toggleMobileMenu()">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-slate-700/50 transition">
+                            <i class="fas fa-moon dark:hidden"></i>
+                            <i class="fas fa-sun hidden dark:inline"></i>
+                        </button>
                     </div>
+                </div>
+                <!-- Mobile Menu -->
+                <div id="mobile-menu" class="hidden md:hidden py-4 space-y-3">
+                    <a href="#solution" class="block hover:text-blue-300 transition">Solution</a>
+                    <a href="#features" class="block hover:text-blue-300 transition">Features</a>
+                    <a href="#contact" class="block hover:text-blue-300 transition">Contact</a>
                 </div>
             </div>
         </div>
@@ -39,19 +168,21 @@
 
     <section class="min-h-screen flex items-center pt-16">
         <div class="container mx-auto px-4">
-            <div class="glass rounded-lg p-6 md:p-8 max-w-2xl mx-auto">
-                <h1 class="text-3xl md:text-5xl font-bold mb-4">Pinpoint Any Location from a Single Image</h1>
-                <p class="text-lg mb-6 opacity-90">Using advanced AI and satellite imagery to revolutionize image geolocation</p>
-                <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition">Get Started</a>
+            <div class="glass rounded-xl p-6 md:p-10 max-w-3xl mx-auto animate-in">
+                <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 leading-tight">Pinpoint Any Location from a Single Image</h1>
+                <p class="text-xl mb-8 opacity-90 leading-relaxed">Using advanced AI and satellite imagery to revolutionize image geolocation</p>
+                <a href="#contact" class="inline-block bg-[var(--accent-color)] hover:bg-[var(--accent-hover)] text-white px-10 py-4 rounded-full font-semibold transition-all duration-300 hover:shadow-lg transform hover:scale-105">
+                    Get Started
+                </a>
             </div>
         </div>
     </section>
 
-    <section class="py-12 bg-slate-900/50">
+    <section class="py-8 md:py-12" style="background-color: var(--overlay-bg)">
         <div class="container mx-auto px-4">
-            <div class="glass rounded-lg p-6 max-w-4xl mx-auto">
+            <div class="glass rounded-lg p-4 md:p-6 max-w-4xl mx-auto">
                 <h2 class="text-2xl font-bold text-center mb-6">What is Image Geolocation?</h2>
-                <div class="grid md:grid-cols-2 gap-6 items-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center">
                     <div class="space-y-4">
                         <p class="text-lg">Image geolocation is the fascinating process of determining exactly where a photograph was taken using only the visual content within the image.</p>
                         <p>Our AI-powered solution analyzes various elements including:</p>
@@ -75,7 +206,7 @@
                         </ul>
                     </div>
                     <div class="glass p-4 rounded-lg">
-                        <div class="aspect-video bg-slate-800 rounded-lg overflow-hidden relative">
+                        <div class="aspect-video rounded-lg overflow-hidden relative" style="background-color: var(--preview-bg)">
                             <div class="absolute bottom-4 left-4 glass-dark px-3 py-2 rounded-lg text-sm">
                                 <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
                                 Location identified within 71km accuracy
@@ -87,14 +218,16 @@
         </div>
     </section>
 
-    <section id="solution" class="py-12">
+    <section id="solution" class="py-16 md:py-24">
         <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-8">Our Solution</h2>
-            <div class="grid md:grid-cols-3 gap-4">
-                <div class="glass rounded-lg p-6 transform hover:scale-105 transition">
-                    <i class="fas fa-satellite text-3xl mb-3 text-blue-400"></i>
-                    <h3 class="text-lg font-bold mb-2">Satellite Integration</h3>
-                    <p class="opacity-80">Combining ground-level images with satellite data for unprecedented accuracy</p>
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">Our Solution</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="glass rounded-xl p-8 hover-lift">
+                    <div class="bg-blue-500/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-satellite text-3xl text-[var(--accent-color)]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Satellite Integration</h3>
+                    <p class="opacity-80 leading-relaxed">Combining ground-level images with satellite data for unprecedented accuracy</p>
                 </div>
                 <div class="glass rounded-lg p-6 transform hover:scale-105 transition">
                     <i class="fas fa-map-marked-alt text-3xl mb-3 text-blue-300"></i>
@@ -117,7 +250,7 @@
                 <ul class="space-y-2">
                     <li class="flex items-center">
                         <i class="fas fa-check text-blue-400 mr-3"></i>
-                        <span>71km average accuracy</span>
+                        <span> <70km average accuracy</span>
                     </li>
                     <li class="flex items-center">
                         <i class="fas fa-check text-green-400 mr-3"></i>
@@ -136,25 +269,34 @@
         </div>
     </section>
 
-    <section id="contact" class="py-12">
+    <section id="contact" class="py-16">
         <div class="container mx-auto px-4">
-            <div class="glass rounded-lg p-6 max-w-lg mx-auto">
+            <div class="glass rounded-xl p-8 max-w-xl mx-auto">
                 <h2 class="text-2xl font-bold text-center mb-6">Contact Us</h2>
                 <div class="text-center mb-6">
                     <a href="mailto:contact@locamage.dev" class="text-blue-400 hover:text-blue-300 transition">
                         <i class="fas fa-envelope mr-2"></i>contact@locamage.dev
                     </a>
                 </div>
-                <form class="space-y-3" action="mailto:contact@locamage.dev" method="POST" enctype="text/plain">
-                    <input type="email" placeholder="Enter your email" class="w-full bg-slate-800 bg-opacity-50 rounded-lg px-4 py-3 placeholder-slate-400">
-                    <textarea placeholder="Your message" rows="4" class="w-full bg-slate-800 bg-opacity-50 rounded-lg px-4 py-3 placeholder-slate-400"></textarea>
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition">Send Message</button>
+                <form class="space-y-4" action="mailto:contact@locamage.dev" method="POST" enctype="text/plain">
+                    <input type="email" 
+                        placeholder="Enter your email" 
+                        class="w-full rounded-xl px-6 py-4 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:ring-[var(--accent-color)] outline-none"
+                        style="background-color: var(--bg-gradient-from)">
+                    <textarea 
+                        placeholder="Your message" 
+                        rows="4" 
+                        class="w-full rounded-xl px-6 py-4 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:ring-[var(--accent-color)] outline-none"
+                        style="background-color: var(--bg-gradient-from)"></textarea>
+                    <button type="submit" class="w-full bg-[var(--accent-color)] hover:bg-[var(--accent-hover)] text-white py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02]">
+                        Send Message
+                    </button>
                 </form>
             </div>
         </div>
     </section>
 
-    <footer class="glass-dark py-4">
+    <footer class="glass-dark py-4 mt-8">
         <div class="container mx-auto px-6 text-center">
             <p class="opacity-80">&copy; 2024 LocaMage. All rights reserved.</p>
         </div>
