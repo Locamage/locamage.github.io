@@ -1,383 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LocaMage - Advanced Image Geolocation</title>
-    <meta name="description" content="Revolutionary image geolocation using AI and satellite imagery">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        lightblue: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>LocaMage: Advanced Image Geolocation</title>
     <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            color: #111;
+            background-color: white;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 50px;
+            box-sizing: border-box;
         }
 
-        .glass {
-            background: rgba(15, 23, 42, 0.15);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(30, 58, 138, 0.18);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .landing {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            text-align: center;
         }
 
-        .glass:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .glass-dark {
-            background: rgba(15, 23, 42, 0.92);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(30, 58, 138, 0.25);
-        }
-        
-        /* Light mode styles */
-        :root[data-theme="light"] {
-            --bg-gradient-from: #f0f9ff;
-            --bg-gradient-via: #bae6fd;
-            --bg-gradient-to: #e0f2fe;
-            --text-color: #0f172a;
-            --overlay-bg: rgba(241, 245, 249, 0.7);
-            --preview-bg: rgba(241, 245, 249, 0.9);
-            --accent-color: #2563eb;
-            --accent-hover: #1d4ed8;
-        }
-        
-        :root[data-theme="light"] .glass {
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(191, 219, 254, 0.5);
-        }
-        
-        :root[data-theme="light"] .glass-dark {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(191, 219, 254, 0.5);
+        svg {
+            width: 100%;
+            height: auto;
         }
 
-        /* Updated dark mode styles */
-        :root[data-theme="dark"] {
-            --bg-gradient-from: #0f172a;
-            --bg-gradient-via: #172554;
-            --bg-gradient-to: #0f172a;
-            --text-color: #ffffff;
-            --overlay-bg: rgba(15, 23, 42, 0.7);
-            --preview-bg: rgba(30, 41, 59, 0.9);
-            --accent-color: #3b82f6;
-            --accent-hover: #2563eb;
-            --card-bg: rgba(30, 41, 59, 0.95);
-            --card-border: rgba(59, 130, 246, 0.2);
-            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        .svg-container {
+            width: 100%;
+            display: inline-block;
         }
 
-        :root[data-theme="dark"] .glass {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            box-shadow: var(--card-shadow);
+        .separator {
+            letter-spacing: -9px;
         }
 
-        :root[data-theme="dark"] .glass:hover {
-            border-color: rgba(59, 130, 246, 0.4);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        hr {
+            border: none;
+            height: 2px;
+            background-color: lightgrey;
+            width: 100%;
+            margin: 30px auto;
         }
 
-        .animate-in {
-            animation: fadeIn 0.6s ease-out forwards;
+        table {
+            border-collapse: collapse;
+            text-align: center;
+            width: 100%;
         }
 
-        .hover-lift {
-            transition: transform 0.2s ease;
+        td {
+            padding: 5px 20px;
+            border: 1px solid #dddddd;
         }
-        
-        .hover-lift:hover {
-            transform: translateY(-2px);
+
+        .quiet,
+        .links-container a {
+            color: inherit;
+        }
+
+        .links-container {
+            font-size: 24px;
+            margin: 20px;
+        }
+
+        .links-container a {
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .product-photo {
+            display: block;
+            max-height: 640px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .faqtable dt {
+            margin-bottom: 0.75em;
+            font-style: italic;
+        }
+
+        .faqtable dd {
+            margin-left: 0;
+            margin-bottom: 2em;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li::before {
+            content: "•";
+            color: black;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
         }
     </style>
-    <script>
-        // Theme handling
-        function initTheme() {
-            const theme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', theme);
-        }
-
-        function toggleTheme() {
-            const root = document.documentElement;
-            const currentTheme = root.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            root.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        // Initialize theme on page load
-        document.addEventListener('DOMContentLoaded', initTheme);
-    </script>
 </head>
-<body class="text-[var(--text-color)] bg-gradient-to-br transition-all duration-300" style="background-image: linear-gradient(to bottom right, var(--bg-gradient-from), var(--bg-gradient-via), var(--bg-gradient-to))">
-    <nav class="fixed w-full z-50">
-        <div class="glass-dark shadow-lg">
-            <div class="container mx-auto px-4 py-2">
-                <div class="flex items-center justify-between">
-                    <a class="text-xl md:text-2xl font-bold" href="#">LocaMage</a>
-                    <div class="flex items-center space-x-4">
-                        <div class="hidden md:flex space-x-8">
-                            <a href="#solution" class="hover:text-blue-300 transition">Solution</a>
-                            <a href="#features" class="hover:text-blue-300 transition">Features</a>
-                            <a href="#contact" class="hover:text-blue-300 transition">Contact</a>
-                        </div>
-                        <button class="md:hidden text-2xl" onclick="toggleMobileMenu()">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-slate-700/50 transition">
-                            <i class="fas fa-moon dark:hidden"></i>
-                            <i class="fas fa-sun hidden dark:inline"></i>
-                        </button>
-                    </div>
-                </div>
-                <!-- Mobile Menu -->
-                <div id="mobile-menu" class="hidden md:hidden py-4 space-y-3">
-                    <a href="#solution" class="block hover:text-blue-300 transition">Solution</a>
-                    <a href="#features" class="block hover:text-blue-300 transition">Features</a>
-                    <a href="#contact" class="block hover:text-blue-300 transition">Contact</a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <section class="min-h-screen flex items-center pt-16">
-        <div class="container mx-auto px-4">
-            <div class="glass rounded-xl p-6 md:p-10 max-w-3xl mx-auto animate-in">
-                <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 leading-tight">Pinpoint Any Location from a Single Image</h1>
-                <p class="text-xl mb-8 opacity-90 leading-relaxed">Using state-of-the-art AI and satellite imagery to achieve up to 70km accuracy in challenging environments</p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#contact" class="inline-block bg-[var(--accent-color)] hover:bg-[var(--accent-hover)] text-white px-10 py-4 rounded-full font-semibold transition-all duration-300 hover:shadow-lg transform hover:scale-105">
-                        Get Started
-                    </a>
-                    <a href="#api" class="inline-block border-2 border-[var(--accent-color)] px-10 py-4 rounded-full font-semibold transition-all duration-300 hover:shadow-lg transform hover:scale-105 text-center">
-                        API Access
-                    </a>
-                </div>
-            </div>
+<body>
+    <div class="landing">
+        <div class="svg-container">
+            <svg viewBox="0 0 330 50" xmlns="http://www.w3.org/2000/svg">
+                <!-- L -->
+                <rect x="0" y="0" width="10" height="40" fill="#000000" />
+                <rect x="0" y="30" width="30" height="10" fill="#000000" />
+                <!-- O -->
+                <rect x="40" y="0" width="10" height="40" fill="#000000" />
+                <rect x="40" y="0" width="30" height="10" fill="#000000" />
+                <rect x="60" y="0" width="10" height="40" fill="#000000" />
+                <rect x="40" y="30" width="30" height="10" fill="#000000" />
+                <!-- C -->
+                <rect x="80" y="0" width="10" height="40" fill="#000000" />
+                <rect x="80" y="0" width="30" height="10" fill="#000000" />
+                <rect x="80" y="30" width="30" height="10" fill="#000000" />
+                <!-- A -->
+                <rect x="120" y="0" width="10" height="40" fill="#000000" />
+                <rect x="120" y="0" width="30" height="10" fill="#000000" />
+                <rect x="140" y="0" width="10" height="40" fill="#000000" />
+                <rect x="120" y="15" width="30" height="10" fill="#000000" />
+                <!-- M -->
+                <rect x="160" y="0" width="10" height="40" fill="#000000" />
+                <rect x="170" y="10" width="10" height="10" fill="#000000" />
+                <rect x="180" y="20" width="10" height="10" fill="#000000" />
+                <rect x="190" y="10" width="10" height="10" fill="#000000" />
+                <rect x="200" y="0" width="10" height="40" fill="#000000" />
+                <!-- A -->
+                <rect x="220" y="0" width="10" height="40" fill="#000000" />
+                <rect x="220" y="0" width="30" height="10" fill="#000000" />
+                <rect x="240" y="0" width="10" height="40" fill="#000000" />
+                <rect x="220" y="15" width="30" height="10" fill="#000000" />
+                <!-- G -->
+                <rect x="260" y="0" width="10" height="40" fill="#000000" />
+                <rect x="260" y="0" width="30" height="10" fill="#000000" />
+                <rect x="260" y="30" width="30" height="10" fill="#000000" />
+                <rect x="280" y="20" width="10" height="20" fill="#000000" />
+                <rect x="275" y="20" width="15" height="10" fill="#000000" />
+                <!-- E -->
+                <rect x="300" y="0" width="10" height="40" fill="#000000" />
+                <rect x="300" y="0" width="30" height="10" fill="#000000" />
+                <rect x="300" y="15" width="20" height="10" fill="#000000" />
+                <rect x="300" y="30" width="30" height="10" fill="#000000" />
+            </svg>
         </div>
-    </section>
+        <p>Pinpoint Any Location from a Single Image</p>
+        <div class="links-container">
+            <a href="#performance">Performance</a><span class="separator">|</span>
+            <a href="#api">API Access</a><span class="separator">|</span>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
 
-    <section class="py-8 md:py-12" style="background-color: var(--overlay-bg)">
-        <div class="container mx-auto px-4">
-            <div class="glass rounded-lg p-4 md:p-6 max-w-4xl mx-auto">
-                <h2 class="text-2xl font-bold text-center mb-6">What is Image Geolocation?</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center">
-                    <div class="space-y-4">
-                        <p class="text-lg">Image geolocation is the fascinating process of determining exactly where a photograph was taken using only the visual content within the image.</p>
-                        <p>Our AI-powered solution analyzes various elements including:</p>
-                        <ul class="space-y-2">
-                            <li class="flex items-center">
-                                <i class="fas fa-building text-blue-400 mr-3"></i>
-                                <span>Architecture styles</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-tree text-blue-400 mr-3"></i>
-                                <span>Natural environment</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-road text-blue-400 mr-3"></i>
-                                <span>Infrastructure patterns</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-globe text-blue-400 mr-3"></i>
-                                <span>Cultural indicators</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="glass p-4 rounded-lg">
-                        <div class="aspect-video rounded-lg overflow-hidden relative">
-                            <img 
-                                src="mali.jpg" 
-                                alt="Example of image geolocation in Mali" 
-                                class="w-full h-full object-cover"
-                            >
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                            <div class="absolute bottom-4 left-4 glass-dark px-3 py-2 rounded-lg text-sm">
-                                <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
-                                <span class="mr-2">Location: Mali, West Africa</span>
-                                <span class="opacity-75">±70km accuracy</span>
-                            </div>
-                            <div class="absolute top-4 right-4 glass-dark px-3 py-2 rounded-lg text-sm">
-                                <i class="fas fa-camera text-blue-400 mr-2"></i>
-                                Sample Image
-                            </div>
-                        </div>
-                        <div class="mt-4 text-sm opacity-80 text-center">
-                            Our algorithm successfully identified this location in Mali based on the terrain features and soil composition/texture.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <hr>
+    <h2 id="performance">Performance</h2>
+    <p>Using state-of-the-art AI and satellite imagery to achieve high accuracy.</p>
+    <ul>
+        <li>70km average accuracy in optimal conditions</li>
+        <li>128km radius accuracy for challenging environments</li>
+    </ul>
+    <p>Our algorithm successfully identifies locations based on terrain features, architecture, infrastructure, and
+        more, even in difficult areas like the example from Mali.</p>
 
-    <section id="solution" class="py-16 md:py-24">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">Our Solution</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-                <div class="glass rounded-xl p-8 hover-lift">
-                    <div class="bg-blue-500/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-satellite text-3xl text-[var(--accent-color)]"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Advanced Vision Models</h3>
-                    <p class="opacity-80 leading-relaxed">Utilizing CLIP and custom vision transformers for precise feature extraction and matching</p>
-                </div>
-                <div class="glass rounded-lg p-6 transform hover:scale-105 transition">
-                    <i class="fas fa-map-marked-alt text-3xl mb-3 text-blue-300"></i>
-                    <h3 class="text-lg font-bold mb-2">Geocell Analysis</h3>
-                    <p class="opacity-80">Enhanced location clustering with 16k geocells and multi-stage verification</p>
-                </div>
-                <div class="glass rounded-lg p-6 transform hover:scale-105 transition">
-                    <i class="fas fa-check-circle text-3xl mb-3 text-blue-300"></i>
-                    <h3 class="text-lg font-bold mb-2">Robust Performance</h3>
-                    <p class="opacity-80">70% accuracy within 128km radius, even in challenging environments</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <hr>
+    <h2 id="api">API Access</h2>
+    <p>Our robust REST API is available for qualified partners and organizations.</p>
+    <ul>
+        <li><b>Fast:</b> Quick response times with efficient processing</li>
+        <li><b>Secure:</b> Enterprise-grade security and access controls</li>
+        <li><b>Simple:</b> Easy integration with comprehensive documentation</li>
+    </ul>
+    <p>For privacy and safety reasons, we carefully review all requests for access to our geolocation technology to
+        ensure responsible and ethical use.</p>
+    <p><a href="#contact">Request API Access</a></p>
 
-    <section id="features" class="py-12">
-        <div class="container mx-auto px-4">
-            <div class="glass rounded-lg p-6 max-w-xl mx-auto">
-                <h2 class="text-2xl font-bold text-center mb-6">Key Features</h2>
-                <ul class="space-y-4">
-                    <li class="flex items-center">
-                        <i class="fas fa-check text-blue-400 mr-3"></i>
-                        <span>70km average accuracy in optimal conditions</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check text-blue-400 mr-3"></i>
-                        <span>128km radius for challenging environments</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check text-green-400 mr-3"></i>
-                        <span>CLIP-based feature extraction</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check text-green-400 mr-3"></i>
-                        <span>16,384 geocell classification</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check text-green-400 mr-3"></i>
-                        <span>Multi-stage verification pipeline</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    <hr>
+    <h2 id="contact">Contact Us</h2>
+    <p>To request API access or for other inquiries, please contact us:</p>
+    <p><a href="mailto:contact@locamage.dev">contact@locamage.dev</a></p>
 
-    <section id="api" class="py-12">
-        <div class="container mx-auto px-4">
-            <div class="glass rounded-lg p-6 max-w-4xl mx-auto">
-                <h2 class="text-2xl font-bold text-center mb-6">API Access</h2>
-                <div class="text-center mb-8">
-                    <p class="text-lg mb-4">Our robust REST API is available for qualified partners and organizations</p>
-                    <div class="grid md:grid-cols-3 gap-4 text-left">
-                        <div class="glass p-4 rounded-lg">
-                            <h3 class="font-bold mb-2"><i class="fas fa-bolt mr-2 text-yellow-400"></i>Fast</h3>
-                            <p class="opacity-80">Quick response times with efficient processing</p>
-                        </div>
-                        <div class="glass p-4 rounded-lg">
-                            <h3 class="font-bold mb-2"><i class="fas fa-lock mr-2 text-green-400"></i>Secure</h3>
-                            <p class="opacity-80">Enterprise-grade security and access controls</p>
-                        </div>
-                        <div class="glass p-4 rounded-lg">
-                            <h3 class="font-bold mb-2"><i class="fas fa-code mr-2 text-blue-400"></i>Simple</h3>
-                            <p class="opacity-80">Easy integration with comprehensive documentation</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <a href="#contact" class="inline-block bg-[var(--accent-color)] hover:bg-[var(--accent-hover)] text-white px-8 py-3 rounded-full font-semibold transition-all duration-300">
-                        Request API Access
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-16">
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                <div class="glass rounded-xl p-8">
-                    <h2 class="text-2xl font-bold mb-6">Why Contact Required?</h2>
-                    <div class="space-y-4">
-                        <p class="leading-relaxed">
-                            For privacy and safety reasons, we carefully review all requests for access to our geolocation technology.
-                        </p>
-                        <div class="space-y-3">
-                            <div class="flex items-start space-x-3">
-                                <i class="fas fa-shield-alt text-[var(--accent-color)] mt-1"></i>
-                                <p>We ensure our technology is used responsibly and ethically</p>
-                            </div>
-                            <div class="flex items-start space-x-3">
-                                <i class="fas fa-user-shield text-[var(--accent-color)] mt-1"></i>
-                                <p>We protect privacy rights and prevent misuse</p>
-                            </div>
-                            <div class="flex items-start space-x-3">
-                                <i class="fas fa-lock text-[var(--accent-color)] mt-1"></i>
-                                <p>We maintain strict access control and monitoring</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="glass rounded-xl p-8">
-                    <h2 class="text-2xl font-bold text-center mb-6">Contact Us</h2>
-                    <div class="text-center mb-6">
-                        <a href="mailto:contact@locamage.dev" class="text-blue-400 hover:text-blue-300 transition">
-                            <i class="fas fa-envelope mr-2"></i>contact@locamage.dev
-                        </a>
-                    </div>
-                    <form class="space-y-4" action="mailto:contact@locamage.dev" method="POST" enctype="text/plain">
-                        <input type="email" 
-                            placeholder="Enter your email" 
-                            class="w-full rounded-xl px-6 py-4 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:ring-[var(--accent-color)] outline-none"
-                            style="background-color: var(--bg-gradient-from)">
-                        <textarea 
-                            placeholder="Your message" 
-                            rows="4" 
-                            class="w-full rounded-xl px-6 py-4 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:ring-[var(--accent-color)] outline-none"
-                            style="background-color: var(--bg-gradient-from)"></textarea>
-                        <button type="submit" class="w-full bg-[var(--accent-color)] hover:bg-[var(--accent-hover)] text-white py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02]">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <a href="https://www.stickersstickers.com/"> <img src="https://www.stickersstickers.com/static/img/logo-medium.png" alt="Stickers Stickers, Inc."/> </a>
-    <footer class="glass-dark py-4 mt-8">
-        <div class="container mx-auto px-6 text-center">
-            <p class="opacity-80">&copy; 2024 LocaMage. All rights reserved.</p>
-        </div>
-    </footer>
+    <hr>
+    <center>© 2025 LocaMage. All rights reserved.</center>
+    <br />
 </body>
+
 </html>
