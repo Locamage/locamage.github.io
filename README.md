@@ -1,2 +1,2 @@
-# mercator-labs.github.io
-Public Webpage
+# locamage.github.io
+Public Webpage for Locamage
