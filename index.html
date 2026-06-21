@@ -228,18 +228,21 @@
         .band-text { position: relative; z-index: 1; max-width: 980px; }
         .band-text p { font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif; font-weight: 400; font-size: clamp(38px,5.2vw,72px); color: var(--fg); margin: 0; letter-spacing: -.035em; line-height: 1.12; }
         /* ── Approach ──────────────────────────────── */
-        .approach { background: var(--surface); }
-        .approach-list { border-top: 1px solid var(--stroke); }
+        .approach { background: var(--surface); padding-top: clamp(60px,7vw,92px); padding-bottom: clamp(60px,7vw,92px); }
+        .approach .section-intro { align-items: start; margin-bottom: 34px; }
+        .approach .section-sub { max-width: 620px; }
+        .approach-list { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); border-top: 1px solid var(--stroke); border-bottom: 1px solid var(--stroke); }
         .approach-row {
-            display: grid; grid-template-columns: minmax(220px,.78fr) minmax(0,1.22fr);
-            gap: 56px; padding: 34px 0; border-bottom: 1px solid var(--stroke);
+            display: flex; flex-direction: column; gap: 14px;
+            padding: 28px 28px 30px; border-right: 1px solid var(--stroke);
         }
+        .approach-row:last-child { border-right: none; }
         .approach-row h3 {
             font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif;
-            font-weight: 400; font-size: clamp(22px,2.6vw,34px);
+            font-weight: 400; font-size: clamp(24px,2.4vw,32px);
             letter-spacing: -.02em; line-height: 1.16; margin: 0;
         }
-        .approach-row p { max-width: 720px; font-size: 18px; line-height: 1.82; margin: 0; color: var(--muted); }
+        .approach-row p { max-width: 36ch; font-size: 16px; line-height: 1.68; margin: 0; color: var(--muted); }
         /* ── Use Cases ──────────────────────────────── */
         .usecase-panel { background: var(--surface); padding: 24px 28px 28px; min-width: 0; }
         .usecase-panel h3 {
@@ -392,7 +395,9 @@
             .usecase-panel h3 { font-size: 28px; margin-bottom: 14px; }
             .usecase-item { grid-template-columns: 112px 1fr; gap: 12px; padding: 12px 0; }
             .usecase-item span { font-size: 14px; }
-            .approach-row { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; }
+            .approach-list { grid-template-columns: 1fr; }
+            .approach-row { gap: 10px; padding: 22px 0; border-right: none; border-bottom: 1px solid var(--stroke); }
+            .approach-row:last-child { border-bottom: none; }
             .approach-row p { font-size: 16px; }
             .demo-wrap { grid-template-columns: 1fr; }
             .demo-text { padding: 32px 24px; }
@@ -588,20 +593,20 @@
             <div>
                 <h2 class="reveal">Why this is possible now.</h2>
             </div>
-            <p class="section-sub reveal">Modern Earth AI is moving beyond single images. The useful signal comes from combining sources, comparing places over time, and turning model output into decisions people can act on.</p>
+            <p class="section-sub reveal">Earth AI is getting useful because it no longer treats each image as a one-off snapshot. The strongest systems combine sources, compare time, and turn pixels into a clear next step.</p>
         </div>
         <div class="approach-list">
             <div class="approach-row reveal">
-                <h3>Many signals, one view.</h3>
-                <p>Satellite analysis works best when optical imagery, radar, elevation, climate context, maps, and other Earth data inform the same answer. Locamage is built around that direction: use the strongest available evidence, not just one pretty picture.</p>
+                <h3>More than one sensor.</h3>
+                <p>Useful answers can draw from optical imagery, radar, elevation, climate context, maps, and other Earth data.</p>
             </div>
             <div class="approach-row reveal">
-                <h3>Change matters as much as location.</h3>
-                <p>The most important questions are often time-based: what appeared, disappeared, expanded, dried out, flooded, or burned. Locamage frames satellite imagery as a record of change, not a static screenshot.</p>
+                <h3>Time is part of the image.</h3>
+                <p>The question is often what appeared, disappeared, expanded, dried out, flooded, or burned between dates.</p>
             </div>
             <div class="approach-row reveal">
-                <h3>Answers beat raw model output.</h3>
-                <p>New Earth AI models can make satellite data easier to process, but most teams still need a clear result: where to look, what changed, and what to do next. Locamage focuses on that last mile from imagery to usable answer.</p>
+                <h3>The output should be usable.</h3>
+                <p>Teams need to know where to look, what changed, and what to do next, not just receive another model layer.</p>
             </div>
         </div>
     </section>
