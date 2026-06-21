@@ -208,6 +208,8 @@
         .footer-col a,.footer-col span { font-size: 15px; color: var(--muted); transition: color .25s; }
         .footer-col a:hover { color: var(--fg); }
         .footer-bottom { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .08em; color: var(--dim); }
+        .footer-badge { display: flex; justify-content: center; margin-top: 24px; }
+        .footer-badge img { display: block; width: 180px; max-width: 100%; height: auto; }
 
         /* ── Reveal ────────────────────────────────── */
         .reveal { opacity: 0; transform: translateY(14px); transition: opacity .75s var(--ease), transform .75s var(--ease); }
@@ -258,6 +260,7 @@
             .contact-right { border-left: none; border-top: 1px solid var(--stroke); padding-top: 32px; }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
             .footer-brand { grid-column: 1 / -1; }
+            .footer-bottom { flex-direction: column; gap: 8px; }
             .hero-cta { flex-direction: column; align-items: flex-start; }
             .band { height: 280px; }
         }
@@ -526,6 +529,11 @@
         <div class="footer-bottom">
             <span>&copy; 2026 Locamage</span>
             <span>37°46′N · 122°25′W</span>
+        </div>
+        <div class="footer-badge">
+            <a href="https://www.stickersstickers.com/">
+                <img src="https://www.stickersstickers.com/static/img/logo-medium.png" alt="Stickers Stickers, Inc." />
+            </a>
         </div>
     </footer>
 
