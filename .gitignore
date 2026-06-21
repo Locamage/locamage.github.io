@@ -3,3 +3,5 @@
 .impeccable
 *.md
 !README.md
+!PRODUCT.md
+!DESIGN.md

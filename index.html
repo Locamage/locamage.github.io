@@ -5,16 +5,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Locamage — AI for Satellite Imagery</title>
-    <meta name="description" content="Any satellite image. Any question. Real answers in seconds. No GIS expertise needed. Built for defense, insurance, agriculture, and climate teams." />
+    <meta name="description" content="Ask plain-language questions about satellite imagery and get useful answers in seconds. No GIS expertise needed." />
     <link rel="canonical" href="https://locamage.com/" />
-    <meta name="theme-color" content="#010102" />
+    <meta name="theme-color" content="#f8fafc" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://locamage.com/" />
     <meta property="og:site_name" content="Locamage" />
     <meta property="og:title" content="Locamage — AI for Satellite Imagery" />
-    <meta property="og:description" content="Any satellite image. Any question. Real answers in seconds. No GIS expertise needed. Built for defense, insurance, agriculture, and climate teams." />
+    <meta property="og:description" content="Ask plain-language questions about satellite imagery and get useful answers in seconds. No GIS expertise needed." />
     <meta property="og:image" content="https://locamage.com/img/og.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -22,7 +22,7 @@
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Locamage — AI for Satellite Imagery" />
-    <meta name="twitter:description" content="Any satellite image. Any question. Real answers in seconds. No GIS expertise needed." />
+    <meta name="twitter:description" content="Ask plain-language questions about satellite imagery and get useful answers in seconds. No GIS expertise needed." />
     <meta name="twitter:image" content="https://locamage.com/img/og.webp" />
     <style>
         @font-face {
@@ -41,13 +41,17 @@
         }
 
         :root {
-            --bg: #010102;
-            --surface: #0a0a0b;
-            --fg: #ffffff;
-            --muted: #7a7a7a;
-            --dim: #333333;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-alt: #eef3f8;
+            --fg: #10141f;
+            --muted: #4f5f72;
+            --dim: #6b7788;
             --accent: #1664f0;
-            --stroke: #1e1e1e;
+            --accent-deep: #1055cc;
+            --accent-active: #0d47b3;
+            --stroke: #d7e0ea;
+            --stroke-strong: #aebdcd;
             --ease: cubic-bezier(.15,1,.3,1);
             --pad: clamp(24px,5vw,80px);
             --sy: clamp(80px,9vw,120px);
@@ -59,18 +63,14 @@
         a { text-decoration: none; }
         h1,h2,h3 { font-family: inherit; text-wrap: balance; }
 
-        body::before {
-            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 200; opacity: .018;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-
         [id] { scroll-margin-top: 72px; }
 
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             padding: 20px var(--pad);
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(1,1,2,.97);
+            background: rgba(255,255,255,.96);
+            backdrop-filter: saturate(1.2) blur(12px);
             border-bottom: 1px solid var(--stroke);
             transition: transform .5s var(--ease);
         }
@@ -82,22 +82,26 @@
 
         /* ── Hero ──────────────────────────────────── */
         .hero {
-            position: relative; min-height: 100vh;
+            position: relative; min-height: 92vh;
             display: flex; align-items: center; justify-content: flex-start;
-            padding: 0 var(--pad); overflow: hidden;
+            padding: 88px var(--pad) 56px; overflow: hidden;
+            background:
+                linear-gradient(120deg, rgba(238,243,248,.88) 0%, rgba(248,250,252,0) 48%),
+                var(--bg);
         }
         .hero-img {
-            position: absolute; inset: 0;
+            position: absolute; top: 72px; right: 0; bottom: 0; left: 46%;
             background: url("img/bg.webp") center/cover;
-            filter: brightness(.45) saturate(.35) sepia(.05);
+            filter: brightness(1.04) saturate(.82);
+            border-left: 1px solid var(--stroke);
             animation: drift 40s ease-in-out alternate infinite;
             will-change: transform;
         }
         .hero-vignette {
             position: absolute; inset: 0;
             background:
-                linear-gradient(to right, rgba(1,1,2,.95) 0%, rgba(1,1,2,.70) 50%, rgba(1,1,2,.25) 100%),
-                linear-gradient(to top, var(--bg) 0%, rgba(1,1,2,.08) 35%, transparent 60%);
+                linear-gradient(to right, var(--bg) 0%, rgba(248,250,252,.96) 38%, rgba(248,250,252,.42) 68%, rgba(248,250,252,0) 100%),
+                linear-gradient(to top, var(--bg) 0%, rgba(248,250,252,.16) 38%, transparent 62%);
         }
         @keyframes drift { from { transform: scale(1.06); } to { transform: scale(1); } }
 
@@ -106,14 +110,14 @@
         /* ── Labels ────────────────────────────────── */
         .label {
             display: inline-flex; align-items: center; gap: 14px;
-            font-size: 11px; font-weight: 400; letter-spacing: .24em; text-transform: uppercase;
+            font-size: 11px; font-weight: 500; letter-spacing: .20em; text-transform: uppercase;
             color: var(--accent); margin-bottom: 22px;
         }
-        .label::before { content: ''; display: block; width: 18px; height: 1px; background: var(--accent); opacity: .6; flex-shrink: 0; }
+        .label::before { content: ''; display: block; width: 18px; height: 1px; background: var(--accent); opacity: .72; flex-shrink: 0; }
 
         /* ── Type ──────────────────────────────────── */
-        h1 { font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif; font-weight: 400; font-size: clamp(58px,9vw,122px); color: var(--fg); line-height: 1.0; letter-spacing: -.035em; margin: 0 0 26px; }
-        h1 em { font-style: italic; color: rgba(255,255,255,.78); }
+        h1 { font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif; font-weight: 400; font-size: clamp(52px,8vw,96px); color: var(--fg); line-height: 1.0; letter-spacing: -.035em; margin: 0 0 26px; }
+        h1 em { font-style: italic; color: var(--accent); }
         .accent { font-style: normal; color: var(--accent); }
         h2 { font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif; font-weight: 400; font-size: clamp(36px,4.8vw,60px); color: var(--fg); letter-spacing: -.03em; line-height: 1.08; margin: 0 0 20px; }
         h3 { font-size: 22px; font-weight: 500; color: var(--fg); margin: 0 0 10px; letter-spacing: .005em; }
@@ -125,15 +129,15 @@
             display: inline-flex; align-items: center; gap: 8px;
             padding: 13px 26px; font-family: inherit; font-size: 12px;
             font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
-            cursor: pointer; border: 1px solid transparent;
+            min-height: 44px; cursor: pointer; border: 1px solid transparent;
             transition: background .22s, border-color .22s, color .22s;
         }
         .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-        .btn-primary:hover { background: #1055cc; border-color: #1055cc; }
-        .btn-ghost { background: transparent; color: rgba(255,255,255,.75); border-color: rgba(255,255,255,.16); }
-        .btn-ghost:hover { color: var(--fg); border-color: rgba(255,255,255,.45); }
-        .btn-primary:active { background: #0d47b3; border-color: #0d47b3; }
-        .btn-ghost:active { color: var(--fg); border-color: rgba(255,255,255,.6); }
+        .btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+        .btn-ghost { background: transparent; color: var(--fg); border-color: var(--stroke); }
+        .btn-ghost:hover { color: var(--fg); background: var(--surface-alt); border-color: var(--stroke-strong); }
+        .btn-primary:active { background: var(--accent-active); border-color: var(--accent-active); }
+        .btn-ghost:active { color: var(--fg); background: #e2eaf2; border-color: var(--stroke-strong); }
 
         .hero-cta { display: flex; align-items: center; gap: 14px; }
 
@@ -144,7 +148,7 @@
         .hero-content .hero-cta { animation: hero-up 1s var(--ease) .68s both; }
 
         /* ── Stats ─────────────────────────────────── */
-        .stats-strip { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--stroke); }
+        .stats-strip { display: grid; grid-template-columns: repeat(4,1fr); background: var(--surface); border-top: 1px solid var(--stroke); border-bottom: 1px solid var(--stroke); }
         .stat-item { padding: 36px var(--pad); border-right: 1px solid var(--stroke); }
         .stat-item:last-child { border-right: none; }
         .stat-val { font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif; font-size: clamp(28px,3.2vw,44px); font-weight: 400; color: var(--fg); letter-spacing: -.03em; line-height: 1; margin-bottom: 10px; font-variant-numeric: tabular-nums; }
@@ -153,59 +157,107 @@
 
         /* ── Sections ──────────────────────────────── */
         .section { padding: var(--sy) var(--pad); border-top: 1px solid var(--stroke); }
+        #capabilities { padding-top: clamp(56px,7vw,88px); padding-bottom: clamp(56px,7vw,88px); }
+        #contact { background: var(--surface); }
 
         .section-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 56px; }
         .section-sub { font-size: 18px; color: var(--muted); line-height: 1.88; max-width: 480px; margin: 0; }
 
-        /* ── Capability Cards ──────────────────────── */
-        .cap-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--stroke); }
-        .cap-card { background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
-        .cap-img { position: relative; aspect-ratio: 3/2; overflow: hidden; flex-shrink: 0; }
-        .cap-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.95) saturate(.80); transition: transform .8s var(--ease), filter .8s var(--ease); }
-        .cap-card:hover .cap-img img { transform: scale(1.04); filter: brightness(1.05) saturate(.85); }
-        .cap-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom,transparent 50%,var(--bg) 100%); }
-        .cap-body { padding: 22px 28px 32px; flex: 1; }
+        /* ── Capability Carousel ───────────────────── */
+        .cap-header { display: block; margin-bottom: 26px; }
+        .cap-heading { max-width: 640px; }
+        .cap-heading .section-sub { margin-top: 14px; max-width: 620px; }
+        .cap-controls { display: flex; align-items: center; gap: 10px; }
+        .cap-arrow {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 44px; height: 44px; border: 1px solid var(--stroke);
+            background: var(--surface); color: var(--fg); cursor: pointer;
+            font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif;
+            font-size: 24px; line-height: 1; transition: background .22s, border-color .22s, color .22s;
+        }
+        .cap-arrow:hover { background: var(--surface-alt); border-color: var(--stroke-strong); }
+        .cap-arrow:active { color: var(--accent); border-color: var(--accent); }
+        .cap-arrow:disabled { color: var(--dim); cursor: default; opacity: .55; }
+        .cap-arrow:disabled:hover { background: var(--surface); border-color: var(--stroke); }
+        .cap-showcase { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(300px,.92fr); gap: 1px; background: var(--stroke); border: 1px solid var(--stroke); align-items: stretch; }
+        .cap-carousel { position: relative; min-width: 0; background: var(--surface); }
+        .cap-viewport {
+            background: var(--stroke);
+        }
+        .cap-grid { background: var(--stroke); }
+        .cap-card {
+            min-width: 0; background: var(--surface); overflow: hidden;
+            display: none; grid-template-columns: minmax(0,1.02fr) minmax(260px,.98fr); gap: 1px; min-height: clamp(360px,38vw,500px);
+        }
+        .cap-card:first-child,
+        .cap-card.active { display: grid; }
+        .cap-card[hidden] { display: none; }
+        .cap-img { position: relative; min-height: 100%; overflow: hidden; background: var(--surface-alt); }
+        .cap-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(1) saturate(.90); transition: transform .8s var(--ease), filter .8s var(--ease); }
+        .cap-card:hover .cap-img img { transform: scale(1.04); filter: brightness(1.04) saturate(.95); }
+        .cap-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(16,20,31,.16), transparent 45%); }
+        .cap-body { padding: clamp(30px,4vw,54px); padding-bottom: clamp(86px,8vw,118px); background: var(--surface); display: flex; flex-direction: column; justify-content: center; gap: 28px; }
 
-        .cap-card h3 { font-size: 18px; margin-bottom: 10px; }
-        .cap-card p { font-size: 16px; color: var(--muted); line-height: 1.80; margin: 0; }
+        .cap-card h3 { font-size: clamp(30px,3.4vw,48px); margin: 0 0 16px; max-width: 14ch; font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif; font-weight: 400; line-height: 1.06; letter-spacing: -.03em; }
+        .cap-card p { font-size: clamp(17px,1.4vw,19px); color: var(--muted); line-height: 1.72; max-width: 36ch; margin: 0; }
+        .cap-slide-nav {
+            position: absolute; right: clamp(28px,4vw,52px); bottom: clamp(26px,3vw,38px);
+            width: min(34ch, calc(50% - 56px));
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+            z-index: 2;
+        }
+        .cap-dots { display: flex; justify-content: flex-start; gap: 7px; margin: 0; }
+        .cap-dot { position: relative; width: 28px; height: 28px; border-radius: 50%; background: transparent; transition: background .2s; cursor: pointer; border: none; padding: 0; }
+        .cap-dot::before { content: ''; position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; border-radius: 50%; background: var(--dim); transform: translate(-50%,-50%); }
+        .cap-dot.active::before { background: var(--accent); }
 
         /* ── Band ──────────────────────────────────── */
         .band {
             position: relative; height: 420px; overflow: hidden;
             display: flex; align-items: center; justify-content: flex-start;
             padding: 0 var(--pad); border-top: 1px solid var(--stroke);
+            background: var(--surface-alt);
         }
-        .band-img { position: absolute; inset: 0; background: url("img/feature.webp") center/cover; filter: brightness(.40) saturate(.40) sepia(.05); }
+        .band-img { position: absolute; inset: 0; background: url("img/feature.webp") center/cover; filter: brightness(1.02) saturate(.82); }
         .band::after {
             content: ''; position: absolute; inset: 0;
             background:
-                linear-gradient(to bottom, var(--bg) 0%, transparent 20%, transparent 80%, var(--bg) 100%),
-                linear-gradient(to right, rgba(1,1,2,.85) 0%, transparent 65%);
+                linear-gradient(to bottom, var(--surface-alt) 0%, rgba(238,243,248,0) 18%, rgba(238,243,248,0) 82%, var(--surface-alt) 100%),
+                linear-gradient(to right, rgba(238,243,248,.96) 0%, rgba(238,243,248,.72) 45%, rgba(238,243,248,.08) 78%);
         }
         .band-text { position: relative; z-index: 1; max-width: 980px; }
         .band-text p { font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif; font-weight: 400; font-size: clamp(38px,5.2vw,72px); color: var(--fg); margin: 0; letter-spacing: -.035em; line-height: 1.12; }
-        /* ── Markets ───────────────────────────────── */
-        .market-list { display: flex; flex-direction: column; }
-        .market-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--stroke); padding: 44px 0; }
-        .market-row:last-child { border-bottom: 1px solid var(--stroke); }
-        .market-left,.market-right { position: relative; }
-        .market-left { padding-right: 48px; border-right: 1px solid var(--stroke); }
-        .market-right { padding-left: 48px; display: flex; flex-direction: column; justify-content: center; }
-        .market-tag { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 400; letter-spacing: .20em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
-        .market-tag::before { content: ''; display: block; width: 14px; height: 1px; background: var(--accent); opacity: .6; flex-shrink: 0; }
-        .market-row h3 { font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif; font-weight: 400; font-size: clamp(24px,2.8vw,38px); color: var(--fg); line-height: 1.20; letter-spacing: -.02em; }
-        .market-row ul { margin: 0; padding: 0; list-style: none; }
-        .market-row ul li { font-size: 16px; color: var(--muted); padding: 13px 0; border-bottom: 1px solid var(--stroke); display: flex; align-items: center; gap: 12px; }
-        .market-row ul li:first-child { border-top: 1px solid var(--stroke); }
-        .market-row ul li::before { content: '›'; color: var(--accent); font-size: 16px; flex-shrink: 0; }
-        .market-toggle-icon { display: none; }
+        /* ── Approach ──────────────────────────────── */
+        .approach { background: var(--surface); }
+        .approach-list { border-top: 1px solid var(--stroke); }
+        .approach-row {
+            display: grid; grid-template-columns: minmax(220px,.78fr) minmax(0,1.22fr);
+            gap: 56px; padding: 34px 0; border-bottom: 1px solid var(--stroke);
+        }
+        .approach-row h3 {
+            font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif;
+            font-weight: 400; font-size: clamp(22px,2.6vw,34px);
+            letter-spacing: -.02em; line-height: 1.16; margin: 0;
+        }
+        .approach-row p { max-width: 720px; font-size: 18px; line-height: 1.82; margin: 0; color: var(--muted); }
+        /* ── Use Cases ──────────────────────────────── */
+        .usecase-panel { background: var(--surface); padding: 24px 28px 28px; min-width: 0; }
+        .usecase-panel h3 {
+            font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif;
+            font-weight: 400; font-size: clamp(24px,2.6vw,36px);
+            line-height: 1.08; letter-spacing: -.03em; margin: 0 0 18px;
+        }
+        .usecase-list { display: grid; gap: 0; border-top: 1px solid var(--stroke); }
+        .usecase-item { display: grid; grid-template-columns: 136px 1fr; gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--stroke); }
+        .usecase-item strong { color: var(--fg); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; }
+        .usecase-item span { color: var(--muted); font-size: 15px; line-height: 1.52; }
 
         /* ── Demo ──────────────────────────────────── */
         .demo-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--stroke); overflow: hidden; margin-top: 48px; }
         .demo-text { background: var(--surface); padding: 52px; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
         .demo-text p { font-size: 18px; color: var(--muted); line-height: 1.90; margin: 0; }
-        .demo-img { position: relative; min-height: 300px; background: #090909; }
-        .demo-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.88) saturate(.60); }
+        .demo-img { position: relative; min-height: 300px; background: var(--surface-alt); }
+        .demo-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.98) saturate(.82); }
 
         /* ── Contact ───────────────────────────────── */
         .contact { background: var(--surface); position: relative; overflow: hidden; border-top: 1px solid var(--stroke); }
@@ -215,7 +267,10 @@
         .contact p { font-size: 19px; color: var(--muted); margin: 14px 0 0; line-height: 1.85; max-width: 480px; }
         .contact-email { font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif; font-weight: 400; font-size: clamp(26px,3.5vw,46px); color: var(--accent); letter-spacing: -.02em; border-bottom: 1px solid rgba(22,100,240,.20); padding-bottom: 4px; display: inline-block; transition: border-color .3s; }
         .contact-email:hover { border-color: var(--accent); }
-        .contact-email:active { color: #fff; }
+        .contact-email:active { color: var(--accent-active); }
+        .contact-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+        .copy-email { min-height: 44px; }
+        .contact-status { min-height: 20px; font-size: 14px; color: var(--muted); }
 
         /* ── Footer ────────────────────────────────── */
         footer { padding: 44px var(--pad) 28px; border-top: 1px solid var(--stroke); }
@@ -227,26 +282,23 @@
         .footer-col a,.footer-col span { font-size: 15px; color: var(--muted); transition: color .25s; }
         .footer-col a:hover { color: var(--fg); }
         .footer-bottom { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .08em; color: var(--dim); }
-        .footer-badge { display: flex; justify-content: center; margin-top: 24px; }
-        .footer-badge img { display: block; width: 180px; max-width: 100%; height: auto; }
+        .footer-sponsor {
+            display: flex; align-items: center; justify-content: center; gap: 14px;
+            margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--stroke);
+            color: var(--dim); font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+        }
+        .footer-sponsor img { display: block; width: 150px; max-width: 42vw; height: auto; opacity: .72; transition: opacity .25s; }
+        .footer-sponsor a:hover img { opacity: 1; }
 
         /* ── Reveal ────────────────────────────────── */
-        .reveal { transition: opacity .75s var(--ease), transform .75s var(--ease); }
-        html.js .reveal { opacity: 0; transform: translateY(14px); }
+        .reveal { opacity: 1; transform: none; transition: opacity .75s var(--ease), transform .75s var(--ease); }
+        html.js.reveal-ready .reveal:not(.visible) { opacity: 0; transform: translateY(14px); }
         html.js .reveal.visible { opacity: 1; transform: none; }
-        .cap-card:nth-child(2).reveal { transition-delay: .08s; }
-        .cap-card:nth-child(3).reveal { transition-delay: .16s; }
-        .cap-card:nth-child(5).reveal { transition-delay: .08s; }
-        .cap-card:nth-child(6).reveal { transition-delay: .16s; }
-        .market-row:nth-child(2).reveal { transition-delay: .07s; }
-        .market-row:nth-child(3).reveal { transition-delay: .14s; }
-        .market-row:nth-child(4).reveal { transition-delay: .21s; }
-        .cap-dots { display: none; }
 
         /* ── Mobile Nav ─────────────────────────────── */
         .nav-toggle {
             display: none; background: none; border: none; cursor: pointer;
-            padding: 4px; flex-direction: column; gap: 5px; width: 24px;
+            padding: 12px 10px; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px;
         }
         .nav-toggle span {
             display: block; width: 100%; height: 1px; background: var(--muted);
@@ -258,7 +310,7 @@
         .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--fg); }
         .mobile-nav {
             position: fixed; inset: 0; z-index: 99;
-            background: rgba(1,1,2,.98);
+            background: rgba(255,255,255,.98);
             display: flex; flex-direction: column; justify-content: center;
             padding: 0 var(--pad);
             opacity: 0; pointer-events: none;
@@ -269,14 +321,14 @@
         .mobile-nav-link {
             font-family: 'Alliance No2', 'Mona Sans', system-ui, sans-serif;
             font-size: clamp(40px,10vw,64px); font-weight: 400;
-            letter-spacing: -.03em; color: rgba(255,255,255,.35);
+            letter-spacing: -.03em; color: var(--dim);
             display: block; padding: 8px 0;
             transition: color .25s;
         }
         .mobile-nav-link:hover, .mobile-nav-link:focus { color: var(--fg); }
 
         /* ── Skip Link ─────────────────────────────── */
-        .skip-link { position: fixed; left: -9999px; top: 8px; z-index: 201; background: var(--bg); color: var(--fg); padding: 10px 20px; border: 1px solid var(--stroke); font-size: 14px; white-space: nowrap; }
+        .skip-link { position: fixed; left: -9999px; top: 8px; z-index: 201; background: var(--surface); color: var(--fg); padding: 10px 20px; border: 1px solid var(--stroke-strong); font-size: 14px; white-space: nowrap; }
         .skip-link:focus { left: var(--pad); }
 
         /* ── Focus ─────────────────────────────────── */
@@ -293,8 +345,6 @@
             .reveal, html.js .reveal { opacity: 1; transform: none; transition: none; }
             nav { transition: none; }
             .cap-img img { transition: none; }
-            .market-right, html.js .market-right { transition: none; }
-            .market-toggle-icon { transition: none; }
             .contact-email { transition: none; }
             .mobile-nav { transition: none; }
             .nav-toggle span { transition: none; }
@@ -303,6 +353,13 @@
         /* ── Mobile ────────────────────────────────── */
         @media (max-width: 768px) {
             .hero-img { background-image: url("img/bg-mobile.webp"); }
+            .hero { min-height: auto; padding-top: 320px; padding-bottom: 52px; }
+            .hero-img { top: 72px; left: 0; right: 0; bottom: auto; height: 220px; border-left: none; border-bottom: 1px solid var(--stroke); }
+            .hero-vignette {
+                background:
+                    linear-gradient(to bottom, rgba(248,250,252,0) 76px, rgba(248,250,252,.18) 180px, var(--bg) 300px),
+                    linear-gradient(to right, rgba(248,250,252,.78), rgba(248,250,252,.18));
+            }
             h1 { font-size: 40px; } h2 { font-size: 28px; } h3 { font-size: 18px; }
             .hero-sub { font-size: 16px; max-width: 100%; margin: 0 0 28px; }
             .nav-links { display: none; }
@@ -315,29 +372,35 @@
             .stat-item:nth-child(2) { border-right: none; }
             .stat-item:nth-child(3) { border-top: 1px solid var(--stroke); }
             .stat-item:nth-child(4) { border-top: 1px solid var(--stroke); border-right: none; }
-            .cap-grid { display: flex; overflow-x: scroll; scroll-snap-type: x mandatory; scroll-padding: 0 20px; gap: 10px; background: transparent; -ms-overflow-style: none; scrollbar-width: none; margin: 0 -20px; padding: 0 20px 4px; }
-            .cap-grid::-webkit-scrollbar { display: none; }
-            .cap-card { flex: 0 0 80vw; scroll-snap-align: start; border: 1px solid var(--stroke); }
-            .cap-dots { display: flex; justify-content: center; gap: 7px; margin-top: 18px; }
-            .cap-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--dim); transition: background .2s; cursor: pointer; border: none; padding: 0; }
-            .cap-dot.active { background: var(--accent); }
-            .market-row { grid-template-columns: 1fr; padding: 0; }
-            .market-left { padding: 24px 0; padding-right: 0; border-right: none; display: flex; flex-direction: column; cursor: pointer; }
-            html.js .market-toggle-icon { display: inline-block; }
-            .market-left-header { display: flex; justify-content: space-between; align-items: flex-start; }
-            .market-toggle-icon { color: var(--accent); font-size: 22px; line-height: 1; flex-shrink: 0; margin-left: 16px; margin-top: 2px; transition: transform .3s; }
-            .market-row.open .market-toggle-icon { transform: rotate(45deg); }
-            .market-right { padding-left: 0; }
-            html.js .market-right { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s var(--ease); }
-            html.js .market-right-inner { overflow: hidden; min-height: 0; }
-            html.js .market-row.open .market-right { grid-template-rows: 1fr; }
-            html.js .market-row.open .market-right-inner { padding-bottom: 24px; }
+            .cap-header { grid-template-columns: 1fr; gap: 18px; margin-bottom: 24px; }
+            .cap-controls { justify-content: flex-start; }
+            .cap-showcase { grid-template-columns: 1fr; margin: 0 -20px; border-left: none; border-right: none; }
+            .cap-viewport { border-left: none; border-right: none; }
+            .cap-grid { background: transparent; }
+            .cap-card { min-height: 0; }
+            .cap-card.active { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--stroke); border-bottom: 1px solid var(--stroke); }
+            .cap-img { min-height: 260px; }
+            .cap-card h3 { font-size: 28px; max-width: none; }
+            .cap-body { padding: 24px 20px 96px; gap: 22px; }
+            .cap-card p { font-size: 16px; line-height: 1.68; }
+            .cap-slide-nav { left: 20px; right: 20px; bottom: 26px; width: auto; align-items: center; }
+            .cap-dots { justify-content: flex-start; }
+            .cap-dot { position: relative; width: 28px; height: 28px; border-radius: 50%; background: transparent; transition: background .2s; cursor: pointer; border: none; padding: 0; }
+            .cap-dot::before { content: ''; position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; border-radius: 50%; background: var(--dim); transform: translate(-50%,-50%); }
+            .cap-dot.active::before { background: var(--accent); }
+            .usecase-panel { padding: 24px 20px; }
+            .usecase-panel h3 { font-size: 28px; margin-bottom: 14px; }
+            .usecase-item { grid-template-columns: 112px 1fr; gap: 12px; padding: 12px 0; }
+            .usecase-item span { font-size: 14px; }
+            .approach-row { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; }
+            .approach-row p { font-size: 16px; }
             .demo-wrap { grid-template-columns: 1fr; }
             .demo-text { padding: 32px 24px; }
             .demo-img { min-height: 220px; }
             .contact-grid { grid-template-columns: 1fr; }
             .contact-left { padding-bottom: 0; }
             .contact-right { border-left: none; border-top: 1px solid var(--stroke); padding-top: 32px; }
+            .contact-actions { flex-direction: column; align-items: flex-start; }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
             .footer-brand { grid-column: 1 / -1; }
             .footer-bottom { flex-direction: column; gap: 8px; }
@@ -360,8 +423,9 @@
     <nav aria-label="Main navigation">
         <a class="nav-logo" href="#">Locamage</a>
         <ul class="nav-links">
-            <li><a href="#capabilities">Capabilities</a></li>
-            <li><a href="#markets">Markets</a></li>
+            <li><a href="#capabilities">What It Answers</a></li>
+            <li><a href="#approach">Approach</a></li>
+            <li><a href="#markets">Use Cases</a></li>
             <li><a href="#demo">Demo</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -371,8 +435,9 @@
     </nav>
     <div class="mobile-nav" id="mobile-nav" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
         <ul>
-            <li><a class="mobile-nav-link" href="#capabilities">Capabilities</a></li>
-            <li><a class="mobile-nav-link" href="#markets">Markets</a></li>
+            <li><a class="mobile-nav-link" href="#capabilities">What It Answers</a></li>
+            <li><a class="mobile-nav-link" href="#approach">Approach</a></li>
+            <li><a class="mobile-nav-link" href="#markets">Use Cases</a></li>
             <li><a class="mobile-nav-link" href="#demo">Demo</a></li>
             <li><a class="mobile-nav-link" href="#contact">Contact</a></li>
         </ul>
@@ -383,9 +448,9 @@
         <div class="hero-img"></div>
         <div class="hero-vignette"></div>
         <div class="hero-content">
-            <div class="label">Geospatial Intelligence</div>
-            <h1>Any place.<br><em>Any question.</em></h1>
-            <p class="hero-sub">Drop in any satellite image and ask a question. Get a real answer in seconds.</p>
+            <div class="label">Satellite Image Answers</div>
+            <h1>Ask a place<br><em>what changed.</em></h1>
+            <p class="hero-sub">Upload satellite imagery and ask plain-language questions. Locamage turns pixels into answers people can use.</p>
             <div class="hero-cta">
                 <a class="btn btn-primary" href="#demo">Try the Demo →</a>
                 <a class="btn btn-ghost" href="#contact">Request Access</a>
@@ -396,7 +461,7 @@
     <div class="stats-strip">
         <div class="stat-item reveal">
             <div class="stat-val">&lt;&thinsp;3s</div>
-            <div class="stat-label">Query to answer</div>
+            <div class="stat-label">Question to answer</div>
         </div>
         <div class="stat-item reveal">
             <div class="stat-val">0.3m</div>
@@ -404,7 +469,7 @@
         </div>
         <div class="stat-item reveal">
             <div class="stat-val">4+</div>
-            <div class="stat-label">Sensor modalities</div>
+            <div class="stat-label">Image types supported</div>
         </div>
         <div class="stat-item reveal">
             <div class="stat-val">Global</div>
@@ -413,166 +478,141 @@
     </div>
 
     <section class="section" id="capabilities">
-        <div class="section-intro">
-            <div>
-                <div class="label reveal">Capabilities</div>
-                <h2 class="reveal">What it does.</h2>
+        <div class="cap-header">
+            <div class="cap-heading">
+                <h2 class="reveal">Questions it can answer.</h2>
+                <p class="section-sub reveal">Ask a satellite image about damage, growth, risk, or change.</p>
             </div>
-            <p class="section-sub reveal">No GIS degree needed. Drop in any image and start asking.</p>
         </div>
-        <div class="cap-grid">
-            <div class="cap-card reveal">
-                <div class="cap-img"><img src="img/disaster.webp" alt="Satellite view of damaged buildings and blocked roads" /></div>
-                <div class="cap-body">
-                    <h3>Disaster Response</h3>
-                    <p>Find damaged buildings and blocked roads before boots hit the ground.</p>
+        <div class="cap-showcase reveal">
+            <div class="cap-carousel">
+                <div class="cap-viewport" id="capability-carousel" tabindex="0" aria-label="Capability examples">
+                    <div class="cap-grid">
+                        <div class="cap-card">
+                            <div class="cap-img"><img src="img/disaster.webp" alt="Satellite view of damaged buildings and blocked roads" /></div>
+                            <div class="cap-body">
+                                <div>
+                                    <h3>What was damaged?</h3>
+                                    <p>Find damaged buildings, blocked roads, and hard-hit areas after a flood, storm, or wildfire.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cap-card">
+                            <div class="cap-img"><img src="img/agriculture.webp" alt="Satellite imagery of agricultural fields for crop health monitoring" /></div>
+                            <div class="cap-body">
+                                <div>
+                                    <h3>Are crops healthy?</h3>
+                                    <p>Spot field stress, irrigation problems, and uneven growth before sending people into the field.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cap-card">
+                            <div class="cap-img"><img src="img/urban.webp" alt="Satellite view of city grid and building density" /></div>
+                            <div class="cap-body">
+                                <div>
+                                    <h3>Where is the city growing?</h3>
+                                    <p>Map new buildings, road expansion, and land-use changes across fast-moving urban areas.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cap-card">
+                            <div class="cap-img"><img src="img/climate_cap.webp" alt="Satellite imagery showing environmental change and deforestation" /></div>
+                            <div class="cap-body">
+                                <div>
+                                    <h3>What is changing over time?</h3>
+                                    <p>Track deforestation, erosion, water movement, wildfire exposure, and other visible shifts.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cap-card">
+                            <div class="cap-img"><img src="img/location.webp" alt="Satellite imagery used to detect geographic features across a region" /></div>
+                            <div class="cap-body">
+                                <div>
+                                    <h3>Where are the features?</h3>
+                                    <p>Search across an area for solar panels, roads, water bodies, bare ground, or other visible patterns.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cap-card">
+                            <div class="cap-img"><img src="img/change.webp" alt="Before-and-after satellite imagery showing land use changes" /></div>
+                            <div class="cap-body">
+                                <div>
+                                    <h3>What changed between dates?</h3>
+                                    <p>Compare two images to find new construction, land shifts, storm damage, and recovery progress.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cap-slide-nav">
+                    <div class="cap-controls" aria-label="Capability carousel controls">
+                        <button class="cap-arrow cap-prev" type="button" aria-label="Previous capability" aria-controls="capability-carousel">‹</button>
+                        <button class="cap-arrow cap-next" type="button" aria-label="Next capability" aria-controls="capability-carousel">›</button>
+                    </div>
+                    <div class="cap-dot-slot"></div>
                 </div>
             </div>
-            <div class="cap-card reveal">
-                <div class="cap-img"><img src="img/agriculture.webp" alt="Satellite imagery of agricultural fields for crop health monitoring" /></div>
-                <div class="cap-body">
-                    <h3>Agriculture</h3>
-                    <p>Monitor crop health across entire regions without a single field visit.</p>
+            <aside class="usecase-panel" id="markets" aria-labelledby="usecase-heading">
+                <h3 id="usecase-heading">Where it helps.</h3>
+                <div class="usecase-list">
+                    <div class="usecase-item">
+                        <strong>Security</strong>
+                        <span>Activity, buildings, roads, remote areas.</span>
+                    </div>
+                    <div class="usecase-item">
+                        <strong>Insurance</strong>
+                        <span>Wildfire exposure, flood damage, property condition.</span>
+                    </div>
+                    <div class="usecase-item">
+                        <strong>Agriculture</strong>
+                        <span>Crop health, yield risk, seasonal change.</span>
+                    </div>
+                    <div class="usecase-item">
+                        <strong>Climate</strong>
+                        <span>Deforestation, vegetation signals, coasts, wetlands.</span>
+                    </div>
                 </div>
-            </div>
-            <div class="cap-card reveal">
-                <div class="cap-img"><img src="img/urban.webp" alt="Satellite view of city grid and building density" /></div>
-                <div class="cap-body">
-                    <h3>Urban Planning</h3>
-                    <p>Map every building and road in a city in hours, not months.</p>
-                </div>
-            </div>
-            <div class="cap-card reveal">
-                <div class="cap-img"><img src="img/climate_cap.webp" alt="Satellite imagery showing environmental change and deforestation" /></div>
-                <div class="cap-body">
-                    <h3>Climate &amp; Environment</h3>
-                    <p>Track deforestation, coastal erosion, and wildfire exposure over any time range.</p>
-                </div>
-            </div>
-            <div class="cap-card reveal">
-                <div class="cap-img"><img src="img/location.webp" alt="Satellite imagery used to detect geographic features across a region" /></div>
-                <div class="cap-body">
-                    <h3>Location Intelligence</h3>
-                    <p>Search for features like solar panels, unpaved roads, and water bodies across any region.</p>
-                </div>
-            </div>
-            <div class="cap-card reveal">
-                <div class="cap-img"><img src="img/change.webp" alt="Before-and-after satellite imagery showing land use changes" /></div>
-                <div class="cap-body">
-                    <h3>Change Detection</h3>
-                    <p>See exactly what changed between two dates. New construction, land shifts, damage.</p>
-                </div>
-            </div>
+            </aside>
         </div>
     </section>
 
     <div class="band">
         <div class="band-img"></div>
         <div class="band-text">
-            <p>Every image holds an answer.<br><span class="accent">We find it in seconds.</span></p>
+            <p>Every satellite image has a question inside it.<br><span class="accent">Ask it in plain language.</span></p>
         </div>
     </div>
 
-    <section class="section" id="markets">
+    <section class="section approach" id="approach">
         <div class="section-intro">
             <div>
-                <div class="label reveal">Markets</div>
-                <h2 class="reveal">Who uses it.</h2>
+                <h2 class="reveal">Why this is possible now.</h2>
             </div>
-            <p class="section-sub reveal">Built for teams that need answers fast and can't wait weeks for a GIS report.</p>
+            <p class="section-sub reveal">Modern Earth AI is moving beyond single images. The useful signal comes from combining sources, comparing places over time, and turning model output into decisions people can act on.</p>
         </div>
-        <div class="market-list">
-            <div class="market-row reveal">
-                <div class="market-left">
-                    <div class="market-left-header">
-                        <div>
-                            <div class="market-tag">Defense &amp; Intelligence</div>
-                            <h3>Persistent monitoring.<br>Rapid exploitation.</h3>
-                        </div>
-                        <span class="market-toggle-icon">+</span>
-                    </div>
-                </div>
-                <div class="market-right">
-                    <div class="market-right-inner">
-                    <ul>
-                        <li>Pattern-of-life analysis</li>
-                        <li>Infrastructure assessment</li>
-                        <li>Denied-area imaging</li>
-                    </ul>
-                    </div>
-                </div>
+        <div class="approach-list">
+            <div class="approach-row reveal">
+                <h3>Many signals, one view.</h3>
+                <p>Satellite analysis works best when optical imagery, radar, elevation, climate context, maps, and other Earth data inform the same answer. Locamage is built around that direction: use the strongest available evidence, not just one pretty picture.</p>
             </div>
-            <div class="market-row reveal">
-                <div class="market-left">
-                    <div class="market-left-header">
-                        <div>
-                            <div class="market-tag">Insurance &amp; Risk</div>
-                            <h3>Underwrite faster.<br>Price more accurately.</h3>
-                        </div>
-                        <span class="market-toggle-icon">+</span>
-                    </div>
-                </div>
-                <div class="market-right">
-                    <div class="market-right-inner">
-                    <ul>
-                        <li>Wildfire exposure modeling</li>
-                        <li>Flood damage assessment</li>
-                        <li>Property condition scoring</li>
-                    </ul>
-                    </div>
-                </div>
+            <div class="approach-row reveal">
+                <h3>Change matters as much as location.</h3>
+                <p>The most important questions are often time-based: what appeared, disappeared, expanded, dried out, flooded, or burned. Locamage frames satellite imagery as a record of change, not a static screenshot.</p>
             </div>
-            <div class="market-row reveal">
-                <div class="market-left">
-                    <div class="market-left-header">
-                        <div>
-                            <div class="market-tag">Agriculture</div>
-                            <h3>Field-level intelligence<br>across your whole operation.</h3>
-                        </div>
-                        <span class="market-toggle-icon">+</span>
-                    </div>
-                </div>
-                <div class="market-right">
-                    <div class="market-right-inner">
-                    <ul>
-                        <li>Crop health monitoring</li>
-                        <li>Yield forecasting</li>
-                        <li>Seasonal change detection</li>
-                    </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="market-row reveal">
-                <div class="market-left">
-                    <div class="market-left-header">
-                        <div>
-                            <div class="market-tag">Climate &amp; ESG</div>
-                            <h3>Numbers you can<br>actually report on.</h3>
-                        </div>
-                        <span class="market-toggle-icon">+</span>
-                    </div>
-                </div>
-                <div class="market-right">
-                    <div class="market-right-inner">
-                    <ul>
-                        <li>Deforestation tracking</li>
-                        <li>Carbon stock estimation</li>
-                        <li>Coastal &amp; wetland monitoring</li>
-                    </ul>
-                    </div>
-                </div>
+            <div class="approach-row reveal">
+                <h3>Answers beat raw model output.</h3>
+                <p>New Earth AI models can make satellite data easier to process, but most teams still need a clear result: where to look, what changed, and what to do next. Locamage focuses on that last mile from imagery to usable answer.</p>
             </div>
         </div>
     </section>
 
     <section class="section" id="demo">
-        <div class="label reveal">Demo</div>
-        <h2 class="reveal">See it work.</h2>
+        <h2 class="reveal">Try a public demo.</h2>
         <div class="demo-wrap reveal">
             <div class="demo-text">
-                <h3>GeoGuessr Benchmark</h3>
-                <p>We tested the model on GeoGuessr. Give it a street-level photo and it tells you where in the world it was taken.</p>
-                <div><a class="btn btn-primary" href="https://geoguessr.locamage.com" target="_blank">Try It →</a></div>
+                <h3>Image-location demo</h3>
+                <p>Upload a street-level image and Locamage estimates where it was taken. This demo is smaller than the satellite workflow, but it shows the same visual reasoning.</p>
+                <div><a class="btn btn-primary" href="https://geoguessr.locamage.com" target="_blank" rel="noopener noreferrer">Try It →</a></div>
             </div>
             <div class="demo-img">
                 <img src="img/demo.webp" alt="Street-level imagery used for geolocation analysis" />
@@ -583,13 +623,16 @@
     <section class="contact" id="contact">
         <div class="contact-grid">
             <div class="contact-left">
-                <div class="label reveal">Access</div>
-                <h2 class="reveal">Private beta.</h2>
-                <p class="reveal">We work with research teams, companies, and anyone who needs a custom setup.</p>
+                <h2 class="reveal">Request private beta access.</h2>
+                <p class="reveal">Tell us what imagery you work with and what questions you need answered. We will reply with the right setup for your use case.</p>
             </div>
             <div class="contact-right reveal">
                 <a class="contact-email" href="mailto:pinak@locamage.com">pinak@locamage.com</a>
-                <div><a class="btn btn-primary" href="mailto:pinak@locamage.com">Request Access →</a></div>
+                <div class="contact-actions">
+                    <a class="btn btn-primary" href="mailto:pinak@locamage.com?subject=Locamage%20access%20request">Email Your Use Case →</a>
+                    <button class="btn btn-ghost copy-email" type="button" data-copy-email="pinak@locamage.com">Copy Email</button>
+                </div>
+                <div class="contact-status" aria-live="polite"></div>
             </div>
         </div>
     </section>
@@ -599,12 +642,13 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <div class="footer-logo">Locamage</div>
-                <p>Satellite imagery<br>made easy to use.</p>
+                <p>Ask satellite imagery<br>plain-language questions.</p>
             </div>
             <div class="footer-col">
                 <div class="footer-col-label">Product</div>
-                <a href="#capabilities">Capabilities</a>
-                <a href="#markets">Markets</a>
+                <a href="#capabilities">What it answers</a>
+                <a href="#approach">Approach</a>
+                <a href="#markets">Use cases</a>
                 <a href="#demo">Demo</a>
             </div>
             <div class="footer-col">
@@ -622,7 +666,8 @@
             <span>&copy; 2026 Locamage</span>
             <span>37°46′N · 122°25′W</span>
         </div>
-        <div class="footer-badge">
+        <div class="footer-sponsor">
+            <span>Sponsored by</span>
             <a href="https://www.stickersstickers.com/">
                 <img src="https://www.stickersstickers.com/static/img/logo-medium.png" alt="Stickers Stickers, Inc." />
             </a>
@@ -630,11 +675,16 @@
     </footer>
 
     <script>
-        const io = new IntersectionObserver(
-            es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-            { threshold: 0.08 }
-        );
-        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+        if ('IntersectionObserver' in window) {
+            document.documentElement.classList.add('reveal-ready');
+            const io = new IntersectionObserver(
+                es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+                { threshold: 0.08 }
+            );
+            document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+        } else {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        }
 
         (function () {
             const nav = document.querySelector('nav');
@@ -666,26 +716,58 @@
 
     <script>
         (function () {
-            if (window.innerWidth > 768) return;
-            var grid = document.querySelector('.cap-grid');
-            var cards = grid.querySelectorAll('.cap-card');
+            var viewport = document.querySelector('.cap-viewport');
+            var carousel = document.querySelector('.cap-carousel');
+            var prev = document.querySelector('.cap-prev');
+            var next = document.querySelector('.cap-next');
+            var dotSlot = document.querySelector('.cap-dot-slot');
+            if (!viewport || !carousel || !prev || !next || !dotSlot) return;
+
+            var cards = Array.from(viewport.querySelectorAll('.cap-card'));
+            if (!cards.length) return;
+
             var dotsEl = document.createElement('div');
             dotsEl.className = 'cap-dots';
             dotsEl.setAttribute('role', 'group');
-            dotsEl.setAttribute('aria-label', 'Slide navigation');
-            cards.forEach(function (_, i) {
+            dotsEl.setAttribute('aria-label', 'Capability slide navigation');
+
+            var activeIndex = 0;
+
+            function goTo(index) {
+                activeIndex = Math.max(0, Math.min(cards.length - 1, index));
+                update();
+            }
+
+            function update() {
+                prev.disabled = activeIndex === 0;
+                next.disabled = activeIndex === cards.length - 1;
+                cards.forEach(function (card, cardIndex) {
+                    var active = cardIndex === activeIndex;
+                    card.classList.toggle('active', active);
+                    card.toggleAttribute('hidden', !active);
+                    card.setAttribute('aria-hidden', active ? 'false' : 'true');
+                });
+                dotsEl.querySelectorAll('.cap-dot').forEach(function (dot, dotIndex) {
+                    var active = dotIndex === activeIndex;
+                    dot.classList.toggle('active', active);
+                    dot.setAttribute('aria-current', active ? 'true' : 'false');
+                });
+            }
+
+            cards.forEach(function (card, index) {
+                card.setAttribute('aria-label', 'Capability ' + (index + 1) + ' of ' + cards.length);
                 var dot = document.createElement('button');
                 dot.type = 'button';
-                dot.className = 'cap-dot' + (i === 0 ? ' active' : '');
-                dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-                dot.addEventListener('click', function () { grid.scrollTo({ left: cards[i].offsetLeft - 20, behavior: 'smooth' }); });
+                dot.className = 'cap-dot' + (index === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Go to capability ' + (index + 1));
+                dot.addEventListener('click', function () { goTo(index); });
                 dotsEl.appendChild(dot);
             });
-            grid.parentNode.insertBefore(dotsEl, grid.nextSibling);
-            grid.addEventListener('scroll', function () {
-                var idx = Math.round(grid.scrollLeft / (grid.scrollWidth / cards.length));
-                dotsEl.querySelectorAll('.cap-dot').forEach(function (dot, i) { dot.classList.toggle('active', i === idx); });
-            }, { passive: true });
+
+            dotSlot.appendChild(dotsEl);
+            prev.addEventListener('click', function () { goTo(activeIndex - 1); });
+            next.addEventListener('click', function () { goTo(activeIndex + 1); });
+            update();
         })();
 
         (function () {
@@ -736,12 +818,26 @@
         })();
 
         (function () {
-            if (window.innerWidth > 768) return;
-            document.querySelectorAll('.market-row').forEach(function (row) {
-                var left = row.querySelector('.market-left');
-                left.addEventListener('click', function () {
-                    var isOpen = row.classList.toggle('open');
-                    row.querySelector('.market-toggle-icon').textContent = isOpen ? '−' : '+';
+            var copy = document.querySelector('[data-copy-email]');
+            if (!copy) return;
+
+            var status = document.querySelector('.contact-status');
+            copy.addEventListener('click', function () {
+                var email = copy.getAttribute('data-copy-email');
+                if (!navigator.clipboard) {
+                    if (status) status.textContent = 'Email address: ' + email;
+                    return;
+                }
+
+                navigator.clipboard.writeText(email).then(function () {
+                    if (status) status.textContent = 'Email copied.';
+                    copy.textContent = 'Copied';
+                    window.setTimeout(function () {
+                        copy.textContent = 'Copy Email';
+                        if (status) status.textContent = '';
+                    }, 2200);
+                }).catch(function () {
+                    if (status) status.textContent = 'Email address: ' + email;
                 });
             });
         })();
