@@ -24,6 +24,10 @@
     <meta name="twitter:title" content="Locamage — AI for Satellite Imagery" />
     <meta name="twitter:description" content="Ask plain-language questions about satellite imagery and get useful answers in seconds. No GIS expertise needed." />
     <meta name="twitter:image" content="https://locamage.com/img/og.webp" />
+
+    <!-- Preload hero images (LCP) -->
+    <link rel="preload" as="image" href="img/ftw/2_orig.webp" type="image/webp" />
+    <link rel="preload" as="image" href="img/ftw/2_masked.webp" type="image/webp" />
     <style>
         @font-face {
             font-family: 'Mona Sans';
@@ -466,7 +470,7 @@
     <main id="main-content">
     <section class="hero">
         <div class="hero-slider" aria-label="Drag to compare satellite image with field predictions">
-            <img class="slider-before" src="img/ftw/2_orig.webp" alt="Sentinel-2 harvest composite, Iowa 2024" />
+            <img class="slider-before" src="img/ftw/2_orig.webp" alt="Sentinel-2 harvest composite, Iowa 2024" fetchpriority="high" />
             <div class="slider-after-wrap">
                 <img class="slider-after" src="img/ftw/2_masked.webp" alt="Harvest image with AI field boundary predictions overlaid" />
             </div>
@@ -519,7 +523,7 @@
                 <div class="cap-viewport" id="capability-carousel" tabindex="0" aria-label="Capability examples">
                     <div class="cap-grid">
                         <div class="cap-card">
-                            <div class="cap-img"><img src="img/disaster.webp" alt="Satellite view of damaged buildings and blocked roads" /></div>
+                            <div class="cap-img"><img src="img/disaster.webp" alt="Satellite view of damaged buildings and blocked roads" loading="lazy" /></div>
                             <div class="cap-body">
                                 <div>
                                     <h3>What was damaged?</h3>
@@ -528,7 +532,7 @@
                             </div>
                         </div>
                         <div class="cap-card">
-                            <div class="cap-img"><img src="img/agriculture.webp" alt="Satellite imagery of agricultural fields for crop health monitoring" /></div>
+                            <div class="cap-img"><img src="img/agriculture.webp" alt="Satellite imagery of agricultural fields for crop health monitoring" loading="lazy" /></div>
                             <div class="cap-body">
                                 <div>
                                     <h3>Are crops healthy?</h3>
@@ -537,7 +541,7 @@
                             </div>
                         </div>
                         <div class="cap-card">
-                            <div class="cap-img"><img src="img/urban.webp" alt="Satellite view of city grid and building density" /></div>
+                            <div class="cap-img"><img src="img/urban.webp" alt="Satellite view of city grid and building density" loading="lazy" /></div>
                             <div class="cap-body">
                                 <div>
                                     <h3>Where is the city growing?</h3>
@@ -546,7 +550,7 @@
                             </div>
                         </div>
                         <div class="cap-card">
-                            <div class="cap-img"><img src="img/climate_cap.webp" alt="Satellite imagery showing environmental change and deforestation" /></div>
+                            <div class="cap-img"><img src="img/climate_cap.webp" alt="Satellite imagery showing environmental change and deforestation" loading="lazy" /></div>
                             <div class="cap-body">
                                 <div>
                                     <h3>What is changing over time?</h3>
@@ -555,7 +559,7 @@
                             </div>
                         </div>
                         <div class="cap-card">
-                            <div class="cap-img"><img src="img/location.webp" alt="Satellite imagery used to detect geographic features across a region" /></div>
+                            <div class="cap-img"><img src="img/location.webp" alt="Satellite imagery used to detect geographic features across a region" loading="lazy" /></div>
                             <div class="cap-body">
                                 <div>
                                     <h3>Where are the features?</h3>
@@ -564,7 +568,7 @@
                             </div>
                         </div>
                         <div class="cap-card">
-                            <div class="cap-img"><img src="img/change.webp" alt="Before-and-after satellite imagery showing land use changes" /></div>
+                            <div class="cap-img"><img src="img/change.webp" alt="Before-and-after satellite imagery showing land use changes" loading="lazy" /></div>
                             <div class="cap-body">
                                 <div>
                                     <h3>What changed between dates?</h3>
@@ -645,7 +649,7 @@
                 <div><a class="btn btn-primary" href="https://geoguessr.locamage.com" target="_blank" rel="noopener noreferrer">Try It →</a></div>
             </div>
             <div class="demo-img">
-                <img src="img/demo.webp" alt="Street-level imagery used for geolocation analysis" />
+                <img src="img/demo.webp" alt="Street-level imagery used for geolocation analysis" loading="lazy" />
             </div>
         </div>
     </section>
