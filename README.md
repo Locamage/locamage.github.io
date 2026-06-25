@@ -1,2 +1,3 @@
 # locamage.github.io
-Public Webpage for Locamage
+
+Website for locamage.com
