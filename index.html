@@ -54,7 +54,6 @@
             <span></span><span></span><span></span>
         </button>
     </nav>
-    <div class="scroll-progress" aria-hidden="true"><span></span></div>
     <div class="mobile-nav" id="mobile-nav" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
         <ul>
             <li><a class="mobile-nav-link" href="#capabilities">What It Answers</a></li>
@@ -301,12 +300,6 @@
             <span>&copy; 2026 Locamage</span>
             <span>37°46′N · 122°25′W</span>
         </div>
-        <div class="footer-sponsor">
-            <span>Sponsored by</span>
-            <a href="https://www.stickersstickers.com/">
-                <img src="https://www.stickersstickers.com/static/img/logo-medium.png" alt="Stickers Stickers, Inc." />
-            </a>
-        </div>
     </footer>
 
     <script>
@@ -340,29 +333,6 @@
                 else { nav.classList.remove('nav-hidden'); }
                 lastY = y;
             }, { passive: true });
-        })();
-
-        (function () {
-            var bar = document.querySelector('.scroll-progress span');
-            if (!bar) return;
-
-            var ticking = false;
-            function updateProgress() {
-                var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-                var progress = Math.min(1, Math.max(0, window.scrollY / max));
-                bar.style.setProperty('--scroll-progress', progress);
-                ticking = false;
-            }
-
-            function requestProgress() {
-                if (ticking) return;
-                ticking = true;
-                window.requestAnimationFrame(updateProgress);
-            }
-
-            updateProgress();
-            window.addEventListener('scroll', requestProgress, { passive: true });
-            window.addEventListener('resize', requestProgress);
         })();
     </script>
 

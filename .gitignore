@@ -1,7 +1,9 @@
 .agents
 .claude
 .impeccable
+node_modules
 tailwindcss
+.DS_Store
 *.md
 !README.md
 !PRODUCT.md
