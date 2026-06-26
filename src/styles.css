@@ -183,8 +183,6 @@
         cursor: ew-resize;
         touch-action: none;
         contain: paint;
-        animation: drift 40s ease-in-out alternate infinite;
-        will-change: transform;
     }
 
     .slider-before,
@@ -213,15 +211,10 @@
         height: 42px;
         transform: translate(-50%, -50%);
         letter-spacing: -.04em;
-        transition: background .18s var(--ease-fast), color .18s var(--ease-fast), transform .18s var(--ease-fast);
+        transition: background .18s var(--ease-fast), color .18s var(--ease-fast);
     }
 
-    .hero-slider:hover .slider-handle,
-    .hero-slider:focus-visible .slider-handle {
-        transform: translate(-50%, -50%) scale(1.04);
-    }
-
-    .hero-slider.is-dragging .slider-after-wrap,
+.hero-slider.is-dragging .slider-after-wrap,
     .hero-slider.is-dragging .slider-divider {
         transition: none;
     }
@@ -477,16 +470,10 @@
         transition: transform .8s var(--ease), filter .8s var(--ease);
     }
 
-    .cap-card:hover .cap-img img {
-        transform: scale(1.04);
-        filter: brightness(1.04) saturate(.95);
-    }
-
-    .cap-body {
+.cap-body {
         @apply flex flex-col justify-center bg-white;
         gap: 28px;
         padding: clamp(30px, 4vw, 54px);
-        padding-bottom: clamp(86px, 8vw, 118px);
     }
 
     .cap-card h3 {
@@ -506,10 +493,8 @@
     }
 
     .cap-slide-nav {
-        @apply absolute z-[2] flex flex-wrap items-center justify-between;
-        right: clamp(28px, 4vw, 52px);
-        bottom: clamp(26px, 3vw, 38px);
-        width: min(34ch, calc(50% - 56px));
+        @apply flex items-center justify-between border-t border-hairline;
+        padding: 14px var(--pad);
         gap: 16px;
     }
 
@@ -890,16 +875,6 @@
     }
 }
 
-@keyframes drift {
-    from {
-        transform: scale(1.06);
-    }
-
-    to {
-        transform: scale(1);
-    }
-}
-
 @keyframes hero-up {
     from {
         opacity: 0;
@@ -964,10 +939,7 @@
 
     .btn,
     .btn:hover,
-    .btn:active,
-    .hero-slider:hover .slider-handle,
-    .hero-slider:focus-visible .slider-handle,
-    .hero-slider.is-dragging .slider-handle {
+    .btn:active {
         transform: none;
     }
 
@@ -1211,7 +1183,7 @@
 
     .cap-body {
         gap: 22px;
-        padding: 24px 20px 96px;
+        padding: 24px 20px;
     }
 
     .cap-card p {
@@ -1219,13 +1191,7 @@
         line-height: 1.68;
     }
 
-    .cap-slide-nav {
-        left: 20px;
-        right: 20px;
-        bottom: 26px;
-        width: auto;
-        align-items: center;
-    }
+
 
     .cap-dots {
         justify-content: flex-start;
