@@ -8,8 +8,6 @@
     <meta name="description" content="Ask plain-language questions about satellite imagery and get useful answers in seconds. No GIS expertise needed." />
     <link rel="canonical" href="https://locamage.com/" />
     <meta name="theme-color" content="#f8fafc" />
-
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://locamage.com/" />
     <meta property="og:site_name" content="Locamage" />
@@ -18,25 +16,15 @@
     <meta property="og:image" content="https://locamage.com/img/og.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-
-    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Locamage — AI for Satellite Imagery" />
     <meta name="twitter:description" content="Ask plain-language questions about satellite imagery and get useful answers in seconds. No GIS expertise needed." />
     <meta name="twitter:image" content="https://locamage.com/img/og.webp" />
-
-    <!-- Preload hero images (LCP) -->
     <link rel="preload" as="image" href="img/ftw/2_orig.webp" type="image/webp" />
     <link rel="preload" as="image" href="img/ftw/2_masked.webp" type="image/webp" />
     <link rel="stylesheet" href="dist/styles.css" />
-    <script>
-    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify setPersonProperties setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroups onFeatureFlags addFeatureFlagsHandler onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-    posthog.init('phc_BTI3CDwcpVuG4Pq1tV3bC6RO6Uc17UaQXaC5o5Hqabb', {
-        api_host: 'https://d.locamage.com',
-        ui_host: 'https://us.i.posthog.com',
-        defaults: '2026-01-30'
-    })
-    </script>
+    <script src="src/analytics.js" defer></script>
+    <script src="src/main.js" defer></script>
 </head>
 <body>
 
@@ -66,16 +54,22 @@
 
     <main id="main-content">
     <section class="hero">
-        <div class="hero-slider" role="slider" tabindex="0" aria-label="Compare harvest image with field predictions" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50% predictions visible">
-            <img class="slider-before" src="img/ftw/2_orig.webp" alt="Sentinel-2 harvest composite, Iowa 2024" fetchpriority="high" />
-            <div class="slider-after-wrap">
-                <img class="slider-after" src="img/ftw/2_masked.webp" alt="Harvest image with AI field boundary predictions overlaid" />
+        <div class="hero-slider">
+            <div class="slider-stage" role="slider" tabindex="0" aria-label="Compare harvest image with field predictions" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50% predictions visible">
+                <img class="slider-before" src="img/ftw/2_orig.webp" alt="Sentinel-2 harvest composite, Iowa 2024" fetchpriority="high" />
+                <div class="slider-after-wrap">
+                    <img class="slider-after" src="img/ftw/2_masked.webp" alt="Harvest image with AI field boundary predictions overlaid" />
+                </div>
+                <div class="slider-divider" aria-hidden="true">
+                    <div class="slider-handle">‹ ›</div>
+                </div>
+                <span class="slider-lbl slider-lbl-l">Harvest</span>
+                <span class="slider-lbl slider-lbl-r">Predictions</span>
             </div>
-            <div class="slider-divider" aria-hidden="true">
-                <div class="slider-handle">‹ ›</div>
+            <div class="slider-meta" aria-hidden="true">
+                <span>Sentinel-2 · Iowa · Oct 2024</span>
+                <span>Field boundaries · 10 m/px</span>
             </div>
-            <span class="slider-lbl slider-lbl-l">Harvest</span>
-            <span class="slider-lbl slider-lbl-r">Predictions</span>
         </div>
         <div class="hero-content">
             <div class="label">Satellite Image Answers</div>
@@ -302,295 +296,6 @@
             <span>37°46′N · 122°25′W</span>
         </div>
     </footer>
-
-    <script>
-        document.querySelectorAll('.query-strip, .approach-list, .usecase-list').forEach(group => {
-            Array.from(group.children).forEach((el, index) => {
-                el.style.setProperty('--reveal-index', Math.min(index, 6));
-            });
-        });
-
-        if ('IntersectionObserver' in window) {
-            document.documentElement.classList.add('reveal-ready');
-            const io = new IntersectionObserver(
-                es => es.forEach(e => {
-                    if (!e.isIntersecting) return;
-                    e.target.classList.add('visible');
-                    io.unobserve(e.target);
-                }),
-                { threshold: 0.08 }
-            );
-            document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-        } else {
-            document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-        }
-
-        (function () {
-            const nav = document.querySelector('nav');
-            let lastY = 0;
-            window.addEventListener('scroll', function () {
-                const y = window.scrollY;
-                if (y > 80) { nav.classList.toggle('nav-hidden', y > lastY); }
-                else { nav.classList.remove('nav-hidden'); }
-                lastY = y;
-            }, { passive: true });
-        })();
-    </script>
-
-    <script>
-        (function () {
-            var slider = document.querySelector('.hero-slider');
-            var afterWrap = document.querySelector('.slider-after-wrap');
-            var divider = document.querySelector('.slider-divider');
-            if (!slider || !afterWrap || !divider) return;
-
-            var dragging = false;
-            var currentPct = 50;
-
-            function setPct(value) {
-                currentPct = Math.max(2, Math.min(98, value));
-                slider.style.setProperty('--slider-pct', currentPct + '%');
-                slider.setAttribute('aria-valuenow', String(Math.round(currentPct)));
-                slider.setAttribute('aria-valuetext', Math.round(currentPct) + '% predictions visible');
-            }
-
-            function setFromClient(clientX) {
-                var rect = slider.getBoundingClientRect();
-                setPct((clientX - rect.left) / rect.width * 100);
-            }
-
-            function startDrag(e) {
-                dragging = true;
-                slider.classList.add('is-dragging');
-                setFromClient(e.clientX);
-                if (slider.setPointerCapture && e.pointerId != null) {
-                    slider.setPointerCapture(e.pointerId);
-                }
-            }
-
-            function moveDrag(e) {
-                if (!dragging) return;
-                setFromClient(e.clientX);
-            }
-
-            function endDrag() {
-                dragging = false;
-                slider.classList.remove('is-dragging');
-            }
-
-            setPct(currentPct);
-
-            if (window.PointerEvent) {
-                slider.addEventListener('pointerdown', function (e) {
-                    startDrag(e);
-                    e.preventDefault();
-                });
-                slider.addEventListener('pointermove', moveDrag);
-                slider.addEventListener('pointerup', endDrag);
-                slider.addEventListener('pointercancel', endDrag);
-            } else {
-                slider.addEventListener('mousedown', function (e) {
-                    dragging = true;
-                    slider.classList.add('is-dragging');
-                    setFromClient(e.clientX);
-                    e.preventDefault();
-                });
-                window.addEventListener('mousemove', function (e) {
-                    if (dragging) setFromClient(e.clientX);
-                });
-                window.addEventListener('mouseup', endDrag);
-
-                slider.addEventListener('touchstart', function (e) {
-                    dragging = true;
-                    slider.classList.add('is-dragging');
-                    setFromClient(e.touches[0].clientX);
-                }, { passive: true });
-                window.addEventListener('touchmove', function (e) {
-                    if (dragging) setFromClient(e.touches[0].clientX);
-                }, { passive: true });
-                window.addEventListener('touchend', endDrag);
-            }
-
-            slider.addEventListener('keydown', function (e) {
-                if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
-                    setPct(currentPct - (e.shiftKey ? 10 : 4));
-                    e.preventDefault();
-                }
-                if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
-                    setPct(currentPct + (e.shiftKey ? 10 : 4));
-                    e.preventDefault();
-                }
-                if (e.key === 'Home') {
-                    setPct(2);
-                    e.preventDefault();
-                }
-                if (e.key === 'End') {
-                    setPct(98);
-                    e.preventDefault();
-                }
-            });
-        })();
-    </script>
-
-    <script>
-        (function () {
-            var viewport = document.querySelector('.cap-viewport');
-            var carousel = document.querySelector('.cap-carousel');
-            var prev = document.querySelector('.cap-prev');
-            var next = document.querySelector('.cap-next');
-            var dotSlot = document.querySelector('.cap-dot-slot');
-            if (!viewport || !carousel || !prev || !next || !dotSlot) return;
-
-            var cards = Array.from(viewport.querySelectorAll('.cap-card'));
-            if (!cards.length) return;
-
-            var dotsEl = document.createElement('div');
-            dotsEl.className = 'cap-dots';
-            dotsEl.setAttribute('role', 'group');
-            dotsEl.setAttribute('aria-label', 'Capability slide navigation');
-            viewport.setAttribute('aria-live', 'polite');
-
-            var activeIndex = 0;
-            var swipeStartX = null;
-
-            function goTo(index) {
-                var nextIndex = Math.max(0, Math.min(cards.length - 1, index));
-                if (nextIndex === activeIndex) return;
-                activeIndex = nextIndex;
-                update();
-            }
-
-            function update() {
-                prev.disabled = activeIndex === 0;
-                next.disabled = activeIndex === cards.length - 1;
-                cards.forEach(function (card, cardIndex) {
-                    var active = cardIndex === activeIndex;
-                    card.classList.toggle('active', active);
-                    card.toggleAttribute('hidden', !active);
-                    card.setAttribute('aria-hidden', active ? 'false' : 'true');
-                });
-                dotsEl.querySelectorAll('.cap-dot').forEach(function (dot, dotIndex) {
-                    var active = dotIndex === activeIndex;
-                    dot.classList.toggle('active', active);
-                    dot.setAttribute('aria-current', active ? 'true' : 'false');
-                });
-            }
-
-            cards.forEach(function (card, index) {
-                card.setAttribute('aria-label', 'Capability ' + (index + 1) + ' of ' + cards.length);
-                var dot = document.createElement('button');
-                dot.type = 'button';
-                dot.className = 'cap-dot' + (index === 0 ? ' active' : '');
-                dot.setAttribute('aria-label', 'Go to capability ' + (index + 1));
-                dot.addEventListener('click', function () { goTo(index); });
-                dotsEl.appendChild(dot);
-            });
-
-            dotSlot.appendChild(dotsEl);
-            prev.addEventListener('click', function () { goTo(activeIndex - 1); });
-            next.addEventListener('click', function () { goTo(activeIndex + 1); });
-            viewport.addEventListener('keydown', function (e) {
-                if (e.key === 'ArrowLeft') {
-                    goTo(activeIndex - 1);
-                    e.preventDefault();
-                }
-                if (e.key === 'ArrowRight') {
-                    goTo(activeIndex + 1);
-                    e.preventDefault();
-                }
-            });
-            if (window.PointerEvent) {
-                viewport.addEventListener('pointerdown', function (e) {
-                    swipeStartX = e.clientX;
-                });
-                viewport.addEventListener('pointerup', function (e) {
-                    if (swipeStartX == null) return;
-                    var delta = e.clientX - swipeStartX;
-                    swipeStartX = null;
-                    if (Math.abs(delta) < 48) return;
-                    goTo(delta > 0 ? activeIndex - 1 : activeIndex + 1);
-                });
-                viewport.addEventListener('pointercancel', function () {
-                    swipeStartX = null;
-                });
-            }
-            update();
-        })();
-
-        (function () {
-            var btn = document.querySelector('.nav-toggle');
-            var menu = document.querySelector('.mobile-nav');
-            if (!btn || !menu) return;
-
-            function openMenu() {
-                menu.classList.add('open');
-                btn.setAttribute('aria-expanded', 'true');
-                menu.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden';
-                var firstLink = menu.querySelector('.mobile-nav-link');
-                if (firstLink) firstLink.focus();
-            }
-
-            function closeMenu() {
-                menu.classList.remove('open');
-                btn.setAttribute('aria-expanded', 'false');
-                menu.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = '';
-            }
-
-            btn.addEventListener('click', function () {
-                btn.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
-            });
-
-            menu.querySelectorAll('.mobile-nav-link').forEach(function (a) {
-                a.addEventListener('click', closeMenu);
-            });
-
-            document.addEventListener('keydown', function (e) {
-                if (btn.getAttribute('aria-expanded') !== 'true') return;
-                var focusable = [btn].concat(Array.from(menu.querySelectorAll('.mobile-nav-link')));
-                var idx = focusable.indexOf(document.activeElement);
-                if (e.key === 'Tab') {
-                    e.preventDefault();
-                    var next = e.shiftKey
-                        ? (idx - 1 + focusable.length) % focusable.length
-                        : (idx + 1) % focusable.length;
-                    focusable[next].focus();
-                }
-                if (e.key === 'Escape') {
-                    closeMenu();
-                    btn.focus();
-                }
-            });
-        })();
-
-        (function () {
-            var copy = document.querySelector('[data-copy-email]');
-            if (!copy) return;
-
-            var status = document.querySelector('.contact-status');
-            copy.addEventListener('click', function () {
-                var email = copy.getAttribute('data-copy-email');
-                if (!navigator.clipboard) {
-                    if (status) status.textContent = 'Email address: ' + email;
-                    return;
-                }
-
-                navigator.clipboard.writeText(email).then(function () {
-                    if (status) status.textContent = 'Email copied.';
-                    copy.textContent = 'Copied';
-                    copy.classList.add('copied');
-                    window.setTimeout(function () {
-                        copy.textContent = 'Copy Email';
-                        copy.classList.remove('copied');
-                        if (status) status.textContent = '';
-                    }, 2200);
-                }).catch(function () {
-                    if (status) status.textContent = 'Email address: ' + email;
-                });
-            });
-        })();
-    </script>
 
 </body>
 </html>
